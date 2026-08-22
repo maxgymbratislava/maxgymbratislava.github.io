@@ -62,9 +62,9 @@ Právní stránky = placeholder (brněnské texty záměrně nepřeneseny — ji
 
 ## TODO — čeká na vstupy majitele
 
-- [ ] MAPOVÁNÍ: které fitko (Pro/Solo) = SimplyBook Fitko 1 (event_id 2) / Fitko 2 (event_id 3),
-      a které má vstup přes chodbu (2 klávesnice) — pak doplnit instrukce v uzitocne-info
-- [ ] Přejmenovat služby v SimplyBook adminu na "MaxGym Pro"/"MaxGym Solo"
+- [x] MAPOVÁNÍ (potvrzeno 20. 8.): **MaxGym Pro = Fitko 1 (event_id 2, vstup z ulice, 1 zámek)**,
+      **MaxGym Solo = Fitko 2 (event_id 3, přes chodbu, 2 zámky/2 klávesnice)** — web doplněn
+- [ ] Přejmenovat služby v SimplyBook adminu: Fitko 1 → "MaxGym Pro", Fitko 2 → "MaxGym Solo"
       (bezpečné — routing jde přes numerické ID, ne jméno)
 - [ ] Ceník v EUR (placeholdery __ € v cennik/)
 - [ ] Seznamy vybavení obou fitek (po instalaci strojů)
