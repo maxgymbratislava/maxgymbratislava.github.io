@@ -42,6 +42,8 @@ header {
   max-width: var(--maxw); margin: 0 auto; padding: 14px 20px;
 }
 .nav .logo img { height: 44px; width: auto; }
+.nav .logo-text { font-size: 1.35rem; font-weight: 500; letter-spacing: 0.18em; color: var(--text); text-decoration: none; }
+.nav .logo-text span { color: var(--red); }
 .nav ul {
   display: flex; gap: 26px; list-style: none; align-items: center;
 }
@@ -82,6 +84,23 @@ section.alt { background: var(--card); }
 .step .body { padding: 18px 20px 24px; }
 .step h3 { color: var(--red); letter-spacing: 0.1em; font-size: 1.05rem; margin-bottom: 8px; }
 .step p { font-size: 0.92rem; color: var(--muted); }
+
+/* ── Výběr fitka (karty) ── */
+.gyms { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.gym-card { background: var(--card); border-radius: 6px; padding: 26px 28px; border: 1px solid #262220; }
+.gym-card h3 { font-size: 1.35rem; margin-bottom: 14px; }
+.gym-card h3 span { color: var(--red); }
+.gym-card .fact { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-bottom: 1px solid #262220; font-size: 0.92rem; }
+.gym-card .fact .k { color: var(--muted); }
+.gym-card .btns { display: flex; gap: 10px; margin-top: 18px; }
+.gym-card .btns .btn { flex: 1; margin-top: 0; padding: 11px 10px; text-align: center; }
+
+/* ── Placeholder / poznámky ── */
+.tbd { color: var(--muted); font-style: italic; }
+.note {
+  margin-top: 22px; padding: 14px 18px; border-left: 3px solid var(--red);
+  background: var(--card); font-size: 0.92rem; border-radius: 0 4px 4px 0;
+}
 
 /* ── Ceník ── */
 .price-group { margin-bottom: 44px; }

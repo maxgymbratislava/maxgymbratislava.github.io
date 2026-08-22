@@ -1,4 +1,4 @@
-# MaxGym web (základ: 1:1 klon sologym.pro)
+# MaxGym Bratislava — web (maxgym.sk)
 
 Čistý statický web — **žádný framework, žádný build krok**. HTML + CSS + pár řádků JS.
 Vytvořeno 20. 8. 2026 věrnou rekonstrukcí webu www.sologym.pro (Wix) do editovatelného kódu.
@@ -52,13 +52,25 @@ python3 -m http.server 8000
 - Opraveny překlepy EN originálu (REZERVATION→RESERVATION, paing→paying, TRANING→TRAINING) a EN navigace přeložena (originál měl v EN verzi české položky menu).
 - E-SHOP (odkaz na maxfitnutrition.shop) z menu vypuštěn — rozhodnout, zda patří do MaxGym verze.
 
-## TODO — rebrand na MaxGym Bratislava
+## Stav rebrandingu (20. 8. 2026)
 
-- [ ] Texty CZ → SK, SoloGym → MaxGym, Brno → Bratislava
-- [ ] Ceník → EUR (ceny dodá majitel)
-- [ ] Adresa, telefon, e-mail, mapa BA (dodá majitel)
-- [ ] Dvě fitka: karty na úvodu, rozdělené vybavení, 2 rezervační tlačítka
-  (SimplyBook: https://maxgymbratislava.simplybook.it — Fitko 1 = event_id 2, Fitko 2 = event_id 3)
-- [ ] Logo MaxGym + fotky BA prostor (po instalaci strojů)
-- [ ] Právní dokumenty → SK entita (právník)
-- [ ] Úvodní instrukce: Fitko 2 = jeden kód, dvě klávesnice
+HOTOVO: SK primární jazyk (slovenské URL slugy), MaxGym branding (textové logo),
+dvě fitka **MaxGym Pro** a **MaxGym Solo** (karty na úvodu, sekce ve vybavení a ceníku),
+adresa Klincová 37 / 821 08 Bratislava-Ružinov, kontakt maxgymbratislava@gmail.com,
+SimplyBook iframe na maxgymbratislava.simplybook.it, EN verze zrcadlí SK.
+Právní stránky = placeholder (brněnské texty záměrně nepřeneseny — jiná entita/právo).
+
+## TODO — čeká na vstupy majitele
+
+- [ ] MAPOVÁNÍ: které fitko (Pro/Solo) = SimplyBook Fitko 1 (event_id 2) / Fitko 2 (event_id 3),
+      a které má vstup přes chodbu (2 klávesnice) — pak doplnit instrukce v uzitocne-info
+- [ ] Přejmenovat služby v SimplyBook adminu na "MaxGym Pro"/"MaxGym Solo"
+      (bezpečné — routing jde přes numerické ID, ne jméno)
+- [ ] Ceník v EUR (placeholdery __ € v cennik/)
+- [ ] Seznamy vybavení obou fitek (po instalaci strojů)
+- [ ] Telefon (zatím vynechán), Instagram (zatím "čoskoro"), logo (zatím textové)
+- [ ] Fotky BA prostor (galerie zatím ukazuje brněnskou pobočku, s poznámkou)
+- [ ] MHD/parkování/navigace v uzitocne-info
+- [ ] Právní dokumenty od právníka (SK entita)
+- [ ] Doména maxgym.sk (Pointing: A @ -> GitHub Pages IP, CNAME www; api + MX NESAHAT)
+- [ ] Zmenšit fotky galerie na webové rozlišení (rychlost na mobilu)
