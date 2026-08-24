@@ -1,5 +1,7 @@
 # MaxGym Bratislava — web (maxgym.sk)
 
+> **Pokračuješ na novém stroji? Začni souborem [`PROJECT_HANDOFF.md`](PROJECT_HANDOFF.md).** Obsahuje aktuální audit, vazby SimplyBook/Zapier/Nuki, blokery spuštění i bezpečný postup nasazení.
+
 Čistý statický web — **žádný framework, žádný build krok**. HTML + CSS + pár řádků JS.
 Vytvořeno 20. 8. 2026 věrnou rekonstrukcí webu www.sologym.pro (Wix) do editovatelného kódu.
 Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem přes GitHub + AI.
@@ -7,15 +9,15 @@ Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem
 ## Struktura
 
 ```
-index.html               úvod (CZ)
-cenik/                   ceník
-rezervace/               rezervace (SimplyBook iframe)
+index.html               úvod (SK)
+cennik/                  ceník
+rezervacia/              rezervace (SimplyBook iframe)
 galerie/                 fotogalerie (lightbox)
-vybaveni/                vybavení — 16 karet
-uzitecne-info/           instrukce pro návštěvníky
-obchodni-podminky/       právní dokumenty
-reklamacni-rad-a-podminky/
-ochrana-osobnich-udaju/
+vybavenie/               vybavení
+uzitocne-info/           instrukce pro návštěvníky
+obchodne-podmienky/      právní dokumenty
+reklamacny-poriadok/
+ochrana-osobnych-udajov/
 en/                      anglická verze (stejná struktura, bez právních stránek)
 assets/css/style.css     veškeré styly (barvy = CSS proměnné v :root)
 assets/js/main.js        mobilní menu + lightbox
@@ -39,7 +41,7 @@ python3 -m http.server 8000
 ## Deploy (GitHub Pages)
 
 1. Repo na GitHubu → Settings → Pages → Source: `main` branch, `/ (root)`
-2. Web běží na `https://<user>.github.io/<repo>/`
+2. Tento user-site web běží na `https://maxgymbratislava.github.io/`
 3. Vlastní doména: Settings → Pages → Custom domain (vytvoří soubor `CNAME`),
    u registrátora nastavit A záznamy `@` na GitHub Pages IP + CNAME `www`.
    ⚠️ Pro maxgym.sk: NIKDY neměnit nameservery — jen A/CNAME záznamy (kvůli api.maxgym.sk a mailu).
@@ -52,13 +54,16 @@ python3 -m http.server 8000
 - Opraveny překlepy EN originálu (REZERVATION→RESERVATION, paing→paying, TRANING→TRAINING) a EN navigace přeložena (originál měl v EN verzi české položky menu).
 - E-SHOP (odkaz na maxfitnutrition.shop) z menu vypuštěn — rozhodnout, zda patří do MaxGym verze.
 
-## Stav rebrandingu (20. 8. 2026)
+## Stav rebrandingu (24. 8. 2026)
 
 HOTOVO: SK primární jazyk (slovenské URL slugy), MaxGym branding (textové logo),
 dvě fitka **MaxGym Pro** a **MaxGym Solo** (karty na úvodu, sekce ve vybavení a ceníku),
-adresa Klincová 37 / 821 08 Bratislava-Ružinov, kontakt maxgymbratislava@gmail.com,
+adresa Klincová 37 / 821 08 Bratislava-Ružinov, kontakt maxgym@maxgym.sk,
 SimplyBook iframe na maxgymbratislava.simplybook.it, EN verze zrcadlí SK.
 Právní stránky = placeholder (brněnské texty záměrně nepřeneseny — jiná entita/právo).
+
+Audit 24. 8. odstranil nepotvrzená tvrzení o platbách/stornu/PIN okně, opravil rozbitou galerii,
+zmenšil používané fotografie a doplnil základní SEO/přístupnost. Podrobnosti viz `PROJECT_HANDOFF.md`.
 
 ## TODO — čeká na vstupy majitele
 
@@ -66,11 +71,11 @@ Právní stránky = placeholder (brněnské texty záměrně nepřeneseny — ji
       **MaxGym Solo = Fitko 2 (event_id 3, přes chodbu, 2 zámky/2 klávesnice)** — web doplněn
 - [ ] Přejmenovat služby v SimplyBook adminu: Fitko 1 → "MaxGym Pro", Fitko 2 → "MaxGym Solo"
       (bezpečné — routing jde přes numerické ID, ne jméno)
-- [ ] Ceník v EUR (placeholdery __ € v cennik/)
+- [ ] Ceník v EUR (zatím „čoskoro“ v `cennik/`)
 - [ ] Seznamy vybavení obou fitek (po instalaci strojů)
 - [ ] Telefon (zatím vynechán), Instagram (zatím "čoskoro"), logo (zatím textové)
 - [ ] Fotky BA prostor (galerie zatím ukazuje brněnskou pobočku, s poznámkou)
 - [ ] MHD/parkování/navigace v uzitocne-info
 - [ ] Právní dokumenty od právníka (SK entita)
 - [ ] Doména maxgym.sk (Pointing: A @ -> GitHub Pages IP, CNAME www; api + MX NESAHAT)
-- [ ] Zmenšit fotky galerie na webové rozlišení (rychlost na mobilu)
+- [x] Zmenšit používané fotky galerie a úvodních kroků na webové rozlišení
