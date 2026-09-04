@@ -1,0 +1,99 @@
+name: Deploy to Cesky hosting
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".github/**"
+      - ".gitignore"
+      - "README.md"
+      - "PROJECT_HANDOFF.md"
+  workflow_dispatch:
+
+concurrency:
+  group: maxgym-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: vars.CH_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: production
+
+    steps:
+      - name: Check out the website
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.CH_SSH_HOST }}
+          SSH_PORT: ${{ secrets.CH_SSH_PORT }}
+          SSH_USER: ${{ secrets.CH_SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.CH_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.CH_SSH_KNOWN_HOSTS }}
+          REMOTE_PATH: ${{ secrets.CH_REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+
+          for value in SSH_HOST SSH_PORT SSH_USER SSH_PRIVATE_KEY SSH_KNOWN_HOSTS REMOTE_PATH; do
+            if [ -z "${!value}" ]; then
+              echo "Missing required production secret: CH_${value}" >&2
+              exit 1
+            fi
+          done
+
+          if ! [[ "$SSH_PORT" =~ ^[0-9]+$ ]]; then
+            echo "CH_SSH_PORT must be a number." >&2
+            exit 1
+          fi
+
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/maxgym_deploy"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/maxgym_deploy" "$HOME/.ssh/known_hosts"
+
+          ssh \
+            -p "$SSH_PORT" \
+            -i "$HOME/.ssh/maxgym_deploy" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            "$SSH_USER@$SSH_HOST" \
+            "test -d '$REMOTE_PATH'"
+
+      - name: Upload the website
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.CH_SSH_HOST }}
+          SSH_PORT: ${{ secrets.CH_SSH_PORT }}
+          SSH_USER: ${{ secrets.CH_SSH_USER }}
+          REMOTE_PATH: ${{ secrets.CH_REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+
+          rsync \
+            --recursive \
+            --links \
+            --times \
+            --checksum \
+            --verbose \
+            --itemize-changes \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.gitignore' \
+            --exclude='README.md' \
+            --exclude='PROJECT_HANDOFF.md' \
+            -e "ssh -p $SSH_PORT -i $HOME/.ssh/maxgym_deploy -o BatchMode=yes -o StrictHostKeyChecking=yes" \
+            ./ \
+            "$SSH_USER@$SSH_HOST:$REMOTE_PATH/"
+
+      - name: Remove the temporary SSH key
+        if: always()
+        shell: bash
+        run: rm -f "$HOME/.ssh/maxgym_deploy"

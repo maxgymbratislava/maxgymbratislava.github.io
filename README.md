@@ -38,13 +38,30 @@ python3 -m http.server 8000
 ```
 (absolutní cesty `/assets/...` vyžadují server, ne file://)
 
-## Deploy (GitHub Pages)
+## Deploy (Český hosting)
 
-1. Repo na GitHubu → Settings → Pages → Source: `main` branch, `/ (root)`
-2. Tento user-site web běží na `https://maxgymbratislava.github.io/`
-3. Vlastní doména: Settings → Pages → Custom domain (vytvoří soubor `CNAME`),
-   u registrátora nastavit A záznamy `@` na GitHub Pages IP + CNAME `www`.
-   ⚠️ Pro maxgym.sk: NIKDY neměnit nameservery — jen A/CNAME záznamy (kvůli api.maxgym.sk a mailu).
+Produkční web bude běžet na standardním webhostingu Českého hostingu. GitHub zůstává
+zdrojem kódu; workflow `.github/workflows/deploy-cesky-hosting.yml` po každém obsahovém
+pushi do `main` nahraje web na server přes SSH/rsync. GitHub Pages je pouze dočasný náhled
+a po spuštění `maxgym.sk` se vypne.
+
+Workflow je záměrně blokovaný proměnnou `CH_DEPLOY_ENABLED`. Po aktivaci hostingu vytvoř
+v GitHub repozitáři prostředí `production`, nastav v něm proměnnou
+`CH_DEPLOY_ENABLED=true` a tyto environment secrets:
+
+- `CH_SSH_HOST` — SSH/SFTP server Českého hostingu
+- `CH_SSH_PORT` — SSH port
+- `CH_SSH_USER` — uživatel s přístupem pouze k webhostingu
+- `CH_SSH_PRIVATE_KEY` — privátní část samostatného deploy klíče
+- `CH_SSH_KNOWN_HOSTS` — ověřený záznam host key serveru
+- `CH_REMOTE_PATH` — přesný existující kořen webu potvrzený Českým hostingem
+
+První nasazení spusť ručně přes Actions → Deploy to Cesky hosting → Run workflow.
+Workflow na serveru nic nemaže, aby chybná cílová cesta nemohla odstranit cizí data.
+Teprve po kontrole prvního nasazení lze zvážit řízenou synchronizaci odstraněných souborů.
+
+Při přepínání domény **neměnit nameservery ani záznamy `api.maxgym.sk`, MX, DKIM a
+DMARC**. Mění se pouze kořen webu a `www` podle pokynů hostingu.
 
 ## Vědomé odchylky od Wix originálu
 
@@ -77,5 +94,6 @@ zmenšil používané fotografie a doplnil základní SEO/přístupnost. Podrobn
 - [ ] Fotky BA prostor (galerie zatím ukazuje brněnskou pobočku, s poznámkou)
 - [ ] MHD/parkování/navigace v uzitocne-info
 - [ ] Právní dokumenty od právníka (SK entita)
-- [ ] Doména maxgym.sk (Pointing: A @ -> GitHub Pages IP, CNAME www; api + MX NESAHAT)
+- [ ] Aktivovat objednaný webhosting, doplnit GitHub environment secrets a otestovat deploy
+- [ ] Připojit `maxgym.sk` a `www` k webhostingu; `api`, MX, DKIM a DMARC ponechat beze změny
 - [x] Zmenšit používané fotky galerie a úvodních kroků na webové rozlišení

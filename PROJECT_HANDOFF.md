@@ -1,9 +1,9 @@
 # MaxGym Bratislava web — stav a předání
 
-**Aktualizováno:** 24. 8. 2026  
-**Produkční náhled:** https://maxgymbratislava.github.io/  
-**Repozitář:** `maxgymbratislava/maxgymbratislava.github.io` (GitHub Pages user site)  
-**Cílová doména:** `maxgym.sk` — zatím nepřipojena
+**Aktualizováno:** 4. 9. 2026
+**Dočasný náhled:** https://maxgymbratislava.github.io/
+**Repozitář:** `maxgymbratislava/maxgymbratislava.github.io`
+**Cílová doména:** `maxgym.sk` — webhosting objednán, čeká na aktivaci
 
 Tento soubor je vstupní bod pro pokračování na novém stroji. Neobsahuje hesla, API tokeny ani jiné tajné hodnoty.
 
@@ -23,8 +23,9 @@ Názvy služeb v SimplyBook lze změnit, **číselná ID 2 a 3 se nesmějí změ
 - Statické HTML/CSS/JS bez frameworku a bez build kroku.
 - Slovenština je primární (`/`), angličtina je pod `/en/`.
 - Rezervace je vložený SimplyBook iframe z `maxgymbratislava.simplybook.it`.
-- Nasazení probíhá pushnutím větve `main`; GitHub Pages se aktualizují přibližně do několika minut.
-- Absolutní cesty `/assets/...` předpokládají user-site repo a kořen domény.
+- Produkční nasazení je připravené přes GitHub Actions a SSH/rsync na Český hosting.
+- Workflow je do doplnění přístupů bezpečně vypnuté proměnnou `CH_DEPLOY_ENABLED`.
+- Absolutní cesty `/assets/...` předpokládají nasazení v kořeni domény.
 - Web neobsahuje žádná tajemství. Přístupové údaje patří do password manageru, nikdy do tohoto veřejného repa.
 
 Lokální spuštění:
@@ -102,11 +103,11 @@ web → SimplyBook → Zapier → api.maxgym.sk → MaxGym backend → Nuki → 
 
 ## Doména a SEO po doplnění obsahu
 
-Teprve po připravení obsahu připojit `maxgym.sk` v GitHub Pages. U DNS se mění jen A záznamy kořene a CNAME `www`; **neměnit nameservery, `api.maxgym.sk` ani MX**, jinak přestane fungovat backend nebo e-mail.
+Webhosting u Českého hostingu je objednaný a čeká na aktivaci. Po získání SSH/SFTP údajů doplnit GitHub environment `production` podle `README.md`, provést první ruční deploy a teprve po jeho kontrole připojit `maxgym.sk` a `www`. **Neměnit nameservery, `api.maxgym.sk`, MX, DKIM ani DMARC**, jinak může přestat fungovat backend nebo e-mail.
 
 Po přepnutí domény je nutné:
 
-1. zapnout Enforce HTTPS,
+1. aktivovat a ověřit Let's Encrypt pro `maxgym.sk` i `www.maxgym.sk`,
 2. změnit URL v `sitemap.xml` a `robots.txt` z GitHub Pages na `https://maxgym.sk`,
 3. doplnit canonical, SK/EN hreflang a Open Graph metadata už s finální doménou,
 4. změnit `INFO_URL` backendu na finální informační stránku.
@@ -116,4 +117,4 @@ Po přepnutí domény je nutné:
 - `git status` a `git diff --check` jsou čisté bez nechtěných souborů.
 - Lokálně projít SK/EN úvod, rezervaci, užitečné info, ceník, vybavení, galerii a právní odkazy.
 - Ověřit mobilní menu, iframe SimplyBook, galerii myší i klávesnicí a chybějící obrázky.
-- Po pushi zkontrolovat živý web a počkat na dokončení GitHub Pages deploye.
+- Po pushi zkontrolovat běh workflow `Deploy to Cesky hosting` a živý web.
