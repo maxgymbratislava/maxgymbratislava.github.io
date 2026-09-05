@@ -23,7 +23,8 @@ Názvy služeb v SimplyBook lze změnit, **číselná ID 2 a 3 se nesmějí změ
 ## Technické řešení webu
 
 - Statické HTML/CSS/JS bez frameworku a bez build kroku.
-- Do ostrého spuštění je v kořeni pouze stránka „Pripravujeme“.
+- Do ostrého spuštění je v kořeni pouze obrazová stránka
+  „Už čoskoro nový MAXGYM BRATISLAVA“.
 - Celý web je dočasně pod `/test/`: slovenština na `/test/`, angličtina pod `/test/en/`.
 - `/test/` není chráněný heslem. Je pouze neveřejně odkazovaný a opatřený
   `robots.txt` + `noindex, nofollow`, aby jej běžně nezařazovaly vyhledávače.
@@ -126,8 +127,8 @@ web → SimplyBook → Zapier → api.maxgym.sk → MaxGym backend → Nuki → 
 
 Webhosting u Českého hostingu je aktivní. GitHub environment `production` je nastavený,
 první deploy proběhl úspěšně a `maxgym.sk` i `www.maxgym.sk` fungují přes HTTPS.
-Do ostrého spuštění obě adresy zobrazují pouze stránku „Pripravujeme“; celý web je
-pro kontrolu dostupný na `/test/`.
+Do ostrého spuštění obě adresy zobrazují přes fotografii pouze oznámení
+„Už čoskoro nový MAXGYM BRATISLAVA“; celý web je pro kontrolu dostupný na `/test/`.
 Podle informace majitele je nejbližší termín úhrady hostingu **18. 9. 2026**; před
 tímto datem je potřeba ověřit zaplacení, aby se automatické nasazení ani web nezastavily.
 **Neměnit nameservery, `api.maxgym.sk`, MX, DKIM ani DMARC**, jinak může přestat

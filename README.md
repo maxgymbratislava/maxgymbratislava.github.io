@@ -8,7 +8,8 @@ Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem
 
 ## Aktuální režim před spuštěním
 
-- `https://maxgym.sk/` zobrazuje pouze jednoduchou stránku **„Pripravujeme“**.
+- `https://maxgym.sk/` zobrazuje přes fotografii jednoduché oznámení
+  **„Už čoskoro nový MAXGYM BRATISLAVA“**.
 - Celý pracovní web je veřejně dostupný na `https://maxgym.sk/test/`.
 - `/test/` není chráněný heslem. Není na něj odkaz z úvodní stránky, je zakázaný v
   `robots.txt` a všechny jeho HTML stránky mají `noindex, nofollow`.
@@ -16,7 +17,7 @@ Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem
 ## Struktura
 
 ```
-index.html                    dočasná stránka „Pripravujeme"
+index.html                    dočasná obrazová stránka „Už čoskoro…"
 robots.txt, sitemap.xml       indexování pouze úvodní stránky
 test/index.html               pracovní úvod (SK)
 test/cennik/                  ceník
