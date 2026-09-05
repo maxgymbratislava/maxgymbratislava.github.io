@@ -1,6 +1,9 @@
 # MaxGym Bratislava — web (maxgym.sk)
 
 > **Pokračuješ na novém stroji? Začni souborem [`PROJECT_HANDOFF.md`](PROJECT_HANDOFF.md).** Obsahuje aktuální audit, vazby SimplyBook/Zapier/Nuki, blokery spuštění i bezpečný postup nasazení.
+>
+> **Předáváš projekt majiteli a jeho AI agentovi?** Použij hotový návod a prompt v
+> [`PREDANI_MAJITELI_AGENT.md`](PREDANI_MAJITELI_AGENT.md).
 
 Čistý statický web — **žádný framework, žádný build krok**. HTML + CSS + pár řádků JS.
 Vytvořeno 20. 8. 2026 věrnou rekonstrukcí webu www.sologym.pro (Wix) do editovatelného kódu.
