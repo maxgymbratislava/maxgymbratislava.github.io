@@ -82,8 +82,12 @@ jobs:
             --links \
             --times \
             --checksum \
+            --delete-delay \
             --verbose \
             --itemize-changes \
+            --exclude='.well-known/' \
+            --exclude='source-images/' \
+            --exclude='scripts/' \
             --exclude='.git/' \
             --exclude='.github/' \
             --exclude='.gitignore' \

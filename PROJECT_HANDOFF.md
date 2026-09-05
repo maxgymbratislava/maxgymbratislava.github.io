@@ -1,8 +1,9 @@
 # MaxGym Bratislava web — stav a předání
 
 **Aktualizováno:** 5. 9. 2026
-**Produkce:** https://maxgym.sk/
-**Dočasný náhled:** https://maxgymbratislava.github.io/
+**Veřejná lock stránka:** https://maxgym.sk/
+**Pracovní náhled celého webu:** https://maxgym.sk/test/
+**GitHub Pages náhled repozitáře:** https://maxgymbratislava.github.io/
 **Repozitář:** `maxgymbratislava/maxgymbratislava.github.io`
 **Cílová doména:** `maxgym.sk` — webhosting aktivní, automatický deploy ověřen
 
@@ -22,11 +23,20 @@ Názvy služeb v SimplyBook lze změnit, **číselná ID 2 a 3 se nesmějí změ
 ## Technické řešení webu
 
 - Statické HTML/CSS/JS bez frameworku a bez build kroku.
-- Slovenština je primární (`/`), angličtina je pod `/en/`.
+- Do ostrého spuštění je v kořeni pouze stránka „Pripravujeme“.
+- Celý web je dočasně pod `/test/`: slovenština na `/test/`, angličtina pod `/test/en/`.
+- `/test/` není chráněný heslem. Je pouze neveřejně odkazovaný a opatřený
+  `robots.txt` + `noindex, nofollow`, aby jej běžně nezařazovaly vyhledávače.
 - Rezervace je vložený SimplyBook iframe z `maxgymbratislava.simplybook.it`.
 - Produkční nasazení běží přes GitHub Actions a SSH/rsync na Český hosting.
 - Workflow je aktivní (`CH_DEPLOY_ENABLED=true`); první ruční deploy uspěl 5. 9. 2026.
-- Absolutní cesty `/assets/...` předpokládají nasazení v kořeni domény.
+- Absolutní cesty pracovního webu nyní používají prefix `/test/...`.
+- Rsync řízeně odstraňuje staré soubory z přesně ověřeného webového kořene, ale
+  zachovává systémovou složku `.well-known/` používanou mimo jiné pro HTTPS.
+- Nepoškozené plné fotografie jsou lokálně v `source-images/`. Složka je ignorovaná
+  Gitem, aby se originály nedostaly do veřejného repozitáře, a musí mít samostatnou
+  soukromou zálohu. Webové kopie v `test/assets/img/` se vytvářejí skriptem
+  `scripts/optimize-images.ps1` (max. 1920 px, JPEG 85, následná kontrola načtení).
 - Web neobsahuje žádná tajemství. Přístupové údaje patří do password manageru, nikdy do tohoto veřejného repa.
 
 Lokální spuštění:
@@ -36,7 +46,17 @@ cd maxgym_web
 python3 -m http.server 8000
 ```
 
-Na novém stroji je nutné znovu provést `gh auth login` pro účet `maxgymbratislava`; přihlášení uložené v macOS klíčence se kopírováním složky nepřenese.
+Na novém stroji je nutné znovu provést `gh auth login` pro účet `maxgymbratislava`;
+přihlášení uložené v systémovém správci přihlašovacích údajů se kopírováním složky
+nepřenese. Git lze na Windows bez administrátorských práv používat v PortableGit.
+
+## Dočasný lock režim a pozdější spuštění
+
+Aktuální adresářové rozložení je záměrné: veřejnost vidí pouze kořenový `index.html`,
+zatímco pracovní stránky a jejich assety jsou v `test/`. Až bude obsah schválený,
+v jednom commitu se obsah `test/` přesune zpět do kořene, cesty `/test/...` se změní
+na `/...`, odstraní se `noindex, nofollow` a aktualizují se `robots.txt` se
+`sitemap.xml`. Potom je nutné ověřit SK/EN odkazy a živý deploy.
 
 ## Vazba na rezervace a dveře
 
@@ -105,7 +125,11 @@ web → SimplyBook → Zapier → api.maxgym.sk → MaxGym backend → Nuki → 
 ## Doména a SEO po doplnění obsahu
 
 Webhosting u Českého hostingu je aktivní. GitHub environment `production` je nastavený,
-první deploy proběhl úspěšně a `maxgym.sk` i `www.maxgym.sk` vracejí web přes HTTPS.
+první deploy proběhl úspěšně a `maxgym.sk` i `www.maxgym.sk` fungují přes HTTPS.
+Do ostrého spuštění obě adresy zobrazují pouze stránku „Pripravujeme“; celý web je
+pro kontrolu dostupný na `/test/`.
+Podle informace majitele je nejbližší termín úhrady hostingu **18. 9. 2026**; před
+tímto datem je potřeba ověřit zaplacení, aby se automatické nasazení ani web nezastavily.
 **Neměnit nameservery, `api.maxgym.sk`, MX, DKIM ani DMARC**, jinak může přestat
 fungovat backend nebo e-mail.
 

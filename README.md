@@ -6,37 +6,70 @@
 Vytvořeno 20. 8. 2026 věrnou rekonstrukcí webu www.sologym.pro (Wix) do editovatelného kódu.
 Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem přes GitHub + AI.
 
+## Aktuální režim před spuštěním
+
+- `https://maxgym.sk/` zobrazuje pouze jednoduchou stránku **„Pripravujeme“**.
+- Celý pracovní web je veřejně dostupný na `https://maxgym.sk/test/`.
+- `/test/` není chráněný heslem. Není na něj odkaz z úvodní stránky, je zakázaný v
+  `robots.txt` a všechny jeho HTML stránky mají `noindex, nofollow`.
+
 ## Struktura
 
 ```
-index.html               úvod (SK)
-cennik/                  ceník
-rezervacia/              rezervace (SimplyBook iframe)
-galerie/                 fotogalerie (lightbox)
-vybavenie/               vybavení
-uzitocne-info/           instrukce pro návštěvníky
-obchodne-podmienky/      právní dokumenty
-reklamacny-poriadok/
-ochrana-osobnych-udajov/
-en/                      anglická verze (stejná struktura, bez právních stránek)
-assets/css/style.css     veškeré styly (barvy = CSS proměnné v :root)
-assets/js/main.js        mobilní menu + lightbox
-assets/img/              všechny obrázky (staženy z Wix CDN v plném rozlišení)
+index.html                    dočasná stránka „Pripravujeme"
+robots.txt, sitemap.xml       indexování pouze úvodní stránky
+test/index.html               pracovní úvod (SK)
+test/cennik/                  ceník
+test/rezervacia/              rezervace (SimplyBook iframe)
+test/galeria/                 fotogalerie (lightbox)
+test/vybavenie/               vybavení
+test/uzitocne-info/           instrukce pro návštěvníky
+test/obchodne-podmienky/      právní dokumenty
+test/reklamacny-poriadok/
+test/ochrana-osobnych-udajov/
+test/en/                      anglická verze (stejná struktura, bez právních stránek)
+test/assets/css/style.css     veškeré styly (barvy = CSS proměnné v :root)
+test/assets/js/main.js        mobilní menu + lightbox
+test/assets/img/              optimalizované obrázky používané webem
+source-images/                lokální nepoškozené originály (ignorované Gitem)
+scripts/optimize-images.ps1   opakovatelná tvorba webových kopií z originálů
 ```
 
 ## Jak upravovat
 
-- **Texty:** přímo v HTML souborech. Každá stránka je samostatná (hlavička/patička jsou zkopírované v každém souboru — při změně menu je nutné upravit všechny soubory, s AI to je jeden prompt).
-- **Barvy/fonty:** `assets/css/style.css`, blok `:root` nahoře (`--bg`, `--text`, `--red`, `--red-dark`).
-- **Rezervační systém:** iframe v `rezervace/index.html` a `en/rezervace/index.html`.
+- **Texty:** přímo v HTML souborech pod `test/`. Každá stránka je samostatná
+  (hlavička/patička jsou zkopírované v každém souboru — při změně menu je nutné
+  upravit všechny soubory, s AI to je jeden prompt).
+- **Barvy/fonty:** `test/assets/css/style.css`, blok `:root` nahoře
+  (`--bg`, `--text`, `--red`, `--red-dark`).
+- **Rezervační systém:** iframe v `test/rezervacia/index.html` a
+  `test/en/rezervacia/index.html`.
 
 ## Lokální náhled
 
-Otevři `index.html` v prohlížeči, nebo:
+Spusť server v kořeni repozitáře:
 ```
 python3 -m http.server 8000
 ```
-(absolutní cesty `/assets/...` vyžadují server, ne file://)
+
+Lock stránka bude na `http://localhost:8000/`, celý web na
+`http://localhost:8000/test/`. Absolutní cesty `/test/assets/...` vyžadují server,
+ne otevření přes `file://`.
+
+## Obrázky
+
+Originální JPEGy jsou uložené lokálně v `source-images/`. Složka je v `.gitignore`,
+protože veřejný GitHub repozitář ani webhosting nejsou vhodné místo pro plné zdrojové
+fotografie. **Originály je nutné samostatně zálohovat do soukromého úložiště.** Web
+používá pouze nově vygenerované soubory v `test/assets/img/`. Jejich vytvoření na
+Windows bez instalace dalšího programu:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/optimize-images.ps1
+```
+
+Skript koriguje EXIF orientaci, zmenší delší stranu nejvýše na 1920 px, uloží JPEG
+v kvalitě 85 a každý výstup znovu načte. Zdrojové originály nepřepisuje.
 
 ## Deploy (Český hosting)
 
@@ -54,9 +87,21 @@ nastavena na `true`; GitHub prostředí `production` obsahuje tyto environment s
 - `CH_SSH_KNOWN_HOSTS` — ověřený záznam host key serveru
 - `CH_REMOTE_PATH` — přesný existující kořen webu potvrzený Českým hostingem
 
-První nasazení spusť ručně přes Actions → Deploy to Cesky hosting → Run workflow.
-Workflow na serveru nic nemaže, aby chybná cílová cesta nemohla odstranit cizí data.
-Teprve po kontrole prvního nasazení lze zvážit řízenou synchronizaci odstraněných souborů.
+Nasazení lze spustit ručně přes Actions → Deploy to Cesky hosting → Run workflow.
+Po ověření přesné cílové složky používá workflow řízenou synchronizaci: odstraní ze
+serveru soubory, které už nejsou v repozitáři. Systémovou složku `.well-known/`
+výslovně zachovává kvůli HTTPS certifikátu; `source-images/` a `scripts/` se na
+veřejný server nenahrávají.
+
+### Zpřístupnění hotového webu v kořeni
+
+Až bude web připravený ke spuštění, je potřeba v jednom commitu:
+
+1. přesunout obsah `test/` zpět do kořene repozitáře;
+2. ve všech HTML změnit cesty `/test/...` zpět na `/...`;
+3. odstranit z veřejných stránek `noindex, nofollow`;
+4. upravit `robots.txt` a `sitemap.xml` pro ostré SK/EN stránky;
+5. lokálně ověřit odkazy a po pushi zkontrolovat produkční workflow.
 
 Při přepínání domény **neměnit nameservery ani záznamy `api.maxgym.sk`, MX, DKIM a
 DMARC**. Mění se pouze kořen webu a `www` podle pokynů hostingu.
@@ -93,5 +138,5 @@ zmenšil používané fotografie a doplnil základní SEO/přístupnost. Podrobn
 - [ ] MHD/parkování/navigace v uzitocne-info
 - [ ] Právní dokumenty od právníka (SK entita)
 - [x] Aktivovat webhosting, doplnit GitHub environment secrets a otestovat deploy (5. 9. 2026)
-- [ ] Připojit `maxgym.sk` a `www` k webhostingu; `api`, MX, DKIM a DMARC ponechat beze změny
+- [x] Připojit `maxgym.sk` a `www` k webhostingu; `api`, MX, DKIM a DMARC ponechat beze změny
 - [x] Zmenšit používané fotky galerie a úvodních kroků na webové rozlišení
