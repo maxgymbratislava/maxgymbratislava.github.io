@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maxgymbratislava.github.io/sitemap.xml
+Sitemap: https://maxgym.sk/sitemap.xml
