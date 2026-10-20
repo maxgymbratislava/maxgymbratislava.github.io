@@ -10,7 +10,7 @@
   <link rel="icon" href="/test/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/test/assets/css/style.css">
+  <link rel="stylesheet" href="/test/assets/css/style.css?v=20261020-5">
 </head>
 <body>
 
@@ -34,19 +34,85 @@
   <div class="container">
     <h1 class="section-title">CENNÍK</h1>
 
-    <div class="price-group">
-      <h3>MaxGym Pro</h3>
-      <div class="price-row"><span class="name">Jednorazový vstup</span><span class="price">20 €</span></div>
-      <div class="price-row"><span class="name">Výhodný balíček</span><span class="price tbd">čoskoro</span></div>
+    <div class="pricing-grid">
+      <article class="price-group" aria-labelledby="price-pro">
+        <h2 id="price-pro">MaxGym <span>PRO</span></h2>
+
+        <div class="price-subgroup">
+          <h3>Jednorazové vstupy</h3>
+          <div class="price-row">
+            <span class="name"><strong>Jednorazový vstup</strong><span class="price-detail">75 minút</span></span>
+            <span class="price">20 €</span>
+          </div>
+          <div class="price-row">
+            <span class="name"><strong>Jednorazový vstup</strong><span class="price-detail">150 minút</span></span>
+            <span class="price">35 €</span>
+          </div>
+        </div>
+
+        <div class="price-subgroup">
+          <h3>Výhodné balíčky</h3>
+          <div class="price-row">
+            <span class="name"><strong>Týždenný balíček <span class="discount">−10 %</span></strong><span class="price-detail">3 × vstup na 75 minút · týždenná platnosť</span></span>
+            <span class="price">54 €</span>
+          </div>
+          <div class="price-row">
+            <span class="name"><strong>Mesačný balíček <span class="discount">−20 %</span></strong><span class="price-detail">12 × vstup na 75 minút · mesačná platnosť</span></span>
+            <span class="price">192 €</span>
+          </div>
+        </div>
+
+        <div class="price-subgroup">
+          <h3>Príplatky a doplatky</h3>
+          <div class="price-row">
+            <span class="name"><strong>Navýšenie kapacity</strong><span class="price-detail">4 až 7 osôb</span></span>
+            <span class="price">5 €</span>
+          </div>
+          <div class="price-row">
+            <span class="name"><strong>Navýšenie kapacity</strong><span class="price-detail">8 a viac osôb</span></span>
+            <span class="price text">individuálne</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="price-group" aria-labelledby="price-solo">
+        <h2 id="price-solo">MaxGym <span>SOLO</span></h2>
+
+        <div class="price-subgroup">
+          <h3>Jednorazové vstupy</h3>
+          <div class="price-row">
+            <span class="name"><strong>Jednorazový vstup</strong><span class="price-detail">75 minút</span></span>
+            <span class="price">10 €</span>
+          </div>
+          <div class="price-row">
+            <span class="name"><strong>Jednorazový vstup</strong><span class="price-detail">150 minút</span></span>
+            <span class="price">17 €</span>
+          </div>
+        </div>
+
+        <div class="price-subgroup">
+          <h3>Výhodné balíčky</h3>
+          <div class="price-row">
+            <span class="name"><strong>Týždenný balíček <span class="discount">−10 %</span></strong><span class="price-detail">3 × vstup na 75 minút · týždenná platnosť</span></span>
+            <span class="price">27 €</span>
+          </div>
+          <div class="price-row">
+            <span class="name"><strong>Mesačný balíček <span class="discount">−20 %</span></strong><span class="price-detail">12 × vstup na 75 minút · mesačná platnosť</span></span>
+            <span class="price">96 €</span>
+          </div>
+        </div>
+
+        <div class="price-subgroup">
+          <h3>Príplatky a doplatky</h3>
+          <div class="price-row">
+            <span class="name"><strong>Navýšenie kapacity</strong><span class="price-detail">4 až 7 osôb</span></span>
+            <span class="price">5 €</span>
+          </div>
+        </div>
+      </article>
     </div>
 
-    <div class="price-group">
-      <h3>MaxGym Solo</h3>
-      <div class="price-row"><span class="name">Jednorazový vstup</span><span class="price">10 €</span></div>
-      <div class="price-row"><span class="name">Výhodný balíček</span><span class="price tbd">čoskoro</span></div>
-    </div>
-
-    <p class="note">Cenník dopĺňame — kompletné ceny vstupov, balíčkov a príplatkov zverejníme pred otvorením (1. 9. 2026). Ceny budú v EUR s DPH.</p>
+    <p class="price-note">Všetky ceny sú uvedené v EUR s DPH.</p>
 
     <a class="btn" href="/test/rezervacia/">REZERVÁCIA</a>
   </div>

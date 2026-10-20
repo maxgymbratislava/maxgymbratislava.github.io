@@ -108,14 +108,22 @@ section.alt { background: var(--card); }
 }
 
 /* ── Ceník ── */
-.price-group { margin-bottom: 44px; }
-.price-group h3 { color: var(--red); margin-bottom: 16px; letter-spacing: 0.06em; }
+.pricing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.price-group { background: var(--card); border: 1px solid #262220; border-radius: 6px; padding: 26px 28px; }
+.price-group > h2 { font-size: 1.45rem; margin-bottom: 26px; }
+.price-group > h2 span { color: var(--red); }
+.price-subgroup + .price-subgroup { margin-top: 30px; }
+.price-subgroup h3 { color: var(--red); margin-bottom: 8px; letter-spacing: 0.06em; font-size: 0.95rem; text-transform: uppercase; }
 .price-row {
   display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
   padding: 14px 0; border-bottom: 1px solid #262220;
 }
-.price-row .name { max-width: 70%; }
-.price-row .price { font-weight: 500; font-size: 1.25rem; white-space: nowrap; }
+.price-row .name { max-width: 72%; display: flex; flex-direction: column; }
+.price-row .name strong { font-weight: 500; }
+.price-detail { color: var(--muted); font-size: 0.84rem; line-height: 1.45; margin-top: 3px; }
+.discount { color: var(--red); white-space: nowrap; }
+.price-row .price { font-weight: 500; font-size: 1.25rem; white-space: nowrap; text-align: right; }
+.price-row .price.text { max-width: 42%; font-size: 1rem; white-space: normal; line-height: 1.35; }
 .price-note { color: var(--muted); font-size: 0.9rem; margin-top: 26px; }
 
 /* ── Vybavení ── */
@@ -179,6 +187,8 @@ footer .contact p { font-size: 0.92rem; }
   }
   .nav ul.open { display: flex; }
   .nav-toggle { display: block; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .price-group { padding: 22px 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
