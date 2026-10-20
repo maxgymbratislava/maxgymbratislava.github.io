@@ -10,7 +10,7 @@
   <link rel="icon" href="/test/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/test/assets/css/style.css">
+  <link rel="stylesheet" href="/test/assets/css/style.css?v=20261020-5">
 </head>
 <body>
 <header>
@@ -30,13 +30,51 @@
 </header>
 <section><div class="container">
   <h1 class="section-title">PRICE LIST</h1>
-  <div class="price-group"><h3>MaxGym Pro</h3>
-    <div class="price-row"><span class="name">Single entry</span><span class="price">€20</span></div>
-    <div class="price-row"><span class="name">Value package</span><span class="price tbd">coming soon</span></div></div>
-  <div class="price-group"><h3>MaxGym Solo</h3>
-    <div class="price-row"><span class="name">Single entry</span><span class="price">€10</span></div>
-    <div class="price-row"><span class="name">Value package</span><span class="price tbd">coming soon</span></div></div>
-  <p class="note">Full pricing (entries, packages, surcharges) will be published before opening (September 1, 2026). Prices will be in EUR incl. VAT.</p>
+  <div class="pricing-grid">
+    <article class="price-group" aria-labelledby="price-pro-en">
+      <h2 id="price-pro-en">MaxGym <span>PRO</span></h2>
+
+      <div class="price-subgroup">
+        <h3>Single entries</h3>
+        <div class="price-row"><span class="name"><strong>Single entry</strong><span class="price-detail">75 minutes</span></span><span class="price">€20</span></div>
+        <div class="price-row"><span class="name"><strong>Single entry</strong><span class="price-detail">150 minutes</span></span><span class="price">€35</span></div>
+      </div>
+
+      <div class="price-subgroup">
+        <h3>Value packages</h3>
+        <div class="price-row"><span class="name"><strong>Weekly package <span class="discount">−10%</span></strong><span class="price-detail">3 × 75-minute entry · valid for one week</span></span><span class="price">€54</span></div>
+        <div class="price-row"><span class="name"><strong>Monthly package <span class="discount">−20%</span></strong><span class="price-detail">12 × 75-minute entry · valid for one month</span></span><span class="price">€192</span></div>
+      </div>
+
+      <div class="price-subgroup">
+        <h3>Surcharges and additional fees</h3>
+        <div class="price-row"><span class="name"><strong>Capacity increase</strong><span class="price-detail">4–7 people</span></span><span class="price">€5</span></div>
+        <div class="price-row"><span class="name"><strong>Capacity increase</strong><span class="price-detail">8 or more people</span></span><span class="price text">individually quoted</span></div>
+      </div>
+    </article>
+
+    <article class="price-group" aria-labelledby="price-solo-en">
+      <h2 id="price-solo-en">MaxGym <span>SOLO</span></h2>
+
+      <div class="price-subgroup">
+        <h3>Single entries</h3>
+        <div class="price-row"><span class="name"><strong>Single entry</strong><span class="price-detail">75 minutes</span></span><span class="price">€10</span></div>
+        <div class="price-row"><span class="name"><strong>Single entry</strong><span class="price-detail">150 minutes</span></span><span class="price">€17</span></div>
+      </div>
+
+      <div class="price-subgroup">
+        <h3>Value packages</h3>
+        <div class="price-row"><span class="name"><strong>Weekly package <span class="discount">−10%</span></strong><span class="price-detail">3 × 75-minute entry · valid for one week</span></span><span class="price">€27</span></div>
+        <div class="price-row"><span class="name"><strong>Monthly package <span class="discount">−20%</span></strong><span class="price-detail">12 × 75-minute entry · valid for one month</span></span><span class="price">€96</span></div>
+      </div>
+
+      <div class="price-subgroup">
+        <h3>Surcharges and additional fees</h3>
+        <div class="price-row"><span class="name"><strong>Capacity increase</strong><span class="price-detail">4–7 people</span></span><span class="price">€5</span></div>
+      </div>
+    </article>
+  </div>
+  <p class="price-note">All prices are in EUR including VAT.</p>
   <a class="btn" href="/test/en/rezervacia/">BOOK NOW</a>
 </div></section>
 <footer id="kontakt">
