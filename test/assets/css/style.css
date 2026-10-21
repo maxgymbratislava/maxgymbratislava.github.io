@@ -134,7 +134,19 @@ section.alt { background: var(--card); }
 .equip p { font-size: 0.9rem; color: var(--muted); }
 .equip .benefit { margin-top: 10px; font-size: 0.86rem; color: var(--text); }
 .equip .benefit strong { color: var(--red); font-weight: 500; }
-
+.equipment-page { max-width: 1080px; }
+.equipment-page .equip-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.equipment-intro { max-width: 760px; margin: -18px 0 46px; color: var(--muted); }
+.equipment-gym { padding: 0; }
+.equipment-gym + .equipment-gym { margin-top: 68px; padding-top: 68px; border-top: 1px solid #2d2826; }
+.equipment-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.equipment-heading h2 { margin: 0; font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: .9; color: var(--red); }
+.equipment-heading p { margin: 0; color: var(--muted); font-size: .9rem; }
+.equipment-kicker { display: block; margin-bottom: 8px; color: var(--text); font-size: .78rem; font-weight: 500; letter-spacing: .18em; }
+.equipment-list { margin: 0; padding: 0; list-style: none; }
+.equipment-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding: 10px 0; border-bottom: 1px solid #2d2826; color: var(--text); font-size: .9rem; }
+.equipment-list li:last-child { border-bottom: 0; }
+.equipment-list strong { flex: 0 0 auto; color: var(--muted); font-weight: 400; }
 /* ── Galerie ── */
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
 .gallery img { aspect-ratio: 1; object-fit: cover; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; }
@@ -189,6 +201,9 @@ footer .contact p { font-size: 0.92rem; }
   .nav-toggle { display: block; }
   .pricing-grid { grid-template-columns: 1fr; }
   .price-group { padding: 22px 20px; }
+  .equipment-heading { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .equipment-gym + .equipment-gym { margin-top: 50px; padding-top: 50px; }
+  .equipment-page .equip-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
