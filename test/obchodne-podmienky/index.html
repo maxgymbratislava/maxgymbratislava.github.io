@@ -5,17 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A0908">
   <title>OBCHODNÉ PODMIENKY | MaxGym Bratislava</title>
+  <meta name="description" content="Obchodné podmienky pre rezerváciu a využívanie privátneho fitness centra MAXGYM Bratislava.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/test/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/test/assets/css/style.css">
+  <style>
+    .container.terms-page { max-width: 900px; }
+    .terms-page h2[id] { scroll-margin-top: 90px; }
+    .terms-page h3 { margin-bottom: 10px; color: var(--text); font-size: 1rem; }
+    .terms-page ol { padding-left: 22px; }
+    .terms-page a { color: var(--red); text-underline-offset: .2em; }
+    .terms-page address { margin-bottom: 18px; font-style: normal; font-size: .93rem; }
+    .terms-page .legal-meta { margin-top: -20px; color: var(--muted); }
+    .terms-page .legal-lead { max-width: 780px; font-size: 1rem; }
+    .legal-toc { margin: 28px 0 34px; padding: 20px 24px; border: 1px solid #2d2826; border-radius: 6px; background: var(--card); }
+    .legal-toc strong { display: block; margin-bottom: 8px; }
+    .legal-toc ol { columns: 2; column-gap: 40px; }
+    .legal-toc li { break-inside: avoid; margin-bottom: 4px; }
+    .legal-callout { margin: 18px 0; padding: 18px 20px; border-left: 3px solid var(--red); border-radius: 0 6px 6px 0; background: var(--card); }
+    .legal-callout p:last-child { margin-bottom: 0; }
+    .price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 18px 0 22px; }
+    .price-card { padding: 18px 20px; border: 1px solid #2d2826; border-radius: 6px; background: var(--card); }
+    .price-card ul { margin-bottom: 0; }
+    .withdrawal-form { margin-top: 20px; padding: 20px 24px; border: 1px solid #2d2826; border-radius: 6px; background: var(--card); }
+    .withdrawal-form p:last-child { margin-bottom: 0; }
+    .legal-contact { display: flex; flex-direction: column; gap: 4px; margin-top: 38px; padding: 20px 24px; border-radius: 6px; background: var(--card); }
+    @media (max-width: 820px) {
+      .legal-toc ol { columns: 1; }
+      .price-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 <header>
   <nav class="nav">
     <a class="logo-text" href="/test/">max<span>gym</span></a>
-    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
     <ul>
       <li><a href="/test/rezervacia/">REZERVÁCIA</a></li>
       <li><a href="/test/uzitocne-info/">UŽITOČNÉ INFO</a></li>
@@ -26,16 +53,188 @@
     </ul>
   </nav>
 </header>
-<section>
-  <div class="container legal">
-    <h1>OBCHODNÉ PODMIENKY</h1>
-    <p class="note">Dokument pripravujeme — kompletné znenie zverejníme pred otvorením prevádzky (1. 9. 2026).</p>
-    <p style="margin-top:20px">V prípade otázok nás kontaktuj na <a href="mailto:maxgym@maxgym.sk" style="color:var(--red)">maxgym@maxgym.sk</a>.</p>
-  </div>
-</section>
+
+<main>
+  <section>
+    <div class="container legal terms-page">
+      <h1>OBCHODNÉ PODMIENKY</h1>
+      <p class="legal-meta">Verzia 1.0 · Účinnosť od 21. 10. 2026</p>
+      <p class="legal-lead">Tieto obchodné podmienky upravujú rezerváciu a využívanie privátnych fitness priestorov MAXGYM PRO a MAXGYM SOLO. Pred dokončením objednávky si ich, prosím, pozorne prečítajte.</p>
+
+      <nav class="legal-toc" aria-label="Obsah dokumentu">
+        <strong>Obsah</strong>
+        <ol>
+          <li><a href="#prevadzkovatel">Prevádzkovateľ</a></li>
+          <li><a href="#zakladne-pojmy">Rozsah a základné pojmy</a></li>
+          <li><a href="#sluzby">Poskytované služby</a></li>
+          <li><a href="#objednavka">Objednávka a zmluva</a></li>
+          <li><a href="#ceny">Ceny a platba</a></li>
+          <li><a href="#pristup">Prístup a kapacita</a></li>
+          <li><a href="#bezpecnost">Vek a bezpečnosť</a></li>
+          <li><a href="#prekrocenie">Prekročenie času</a></li>
+          <li><a href="#balicky">Balíčky vstupov</a></li>
+          <li><a href="#storno">Zmena, storno a nedostavenie sa</a></li>
+          <li><a href="#odstupenie">Odstúpenie od zmluvy</a></li>
+          <li><a href="#zrusenie">Zrušenie a technické problémy</a></li>
+          <li><a href="#reklamacie">Reklamácie</a></li>
+          <li><a href="#zodpovednost">Zodpovednosť</a></li>
+          <li><a href="#osobne-udaje">Osobné údaje</a></li>
+          <li><a href="#dohlad">Dohľad a riešenie sporov</a></li>
+          <li><a href="#zaver">Záverečné ustanovenia</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="prevadzkovatel">1. Prevádzkovateľ</h2>
+      <address>
+        <strong>KT Fitness 1 s. r. o.</strong><br>
+        Doležalova 3424/15C, 821 04 Bratislava – mestská časť Ružinov<br>
+        IČO: 57 726 728<br>
+        Zapísaná v Obchodnom registri Mestského súdu Bratislava III, oddiel Sro, vložka č. 201398/B<br>
+        E-mail: <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a><br>
+        Web: <a href="/test/">www.maxgym.sk</a>
+      </address>
+      <p>Miesto poskytovania služieb: <strong>MAXGYM, Klincová 16637/37B, 821 08 Bratislava – mestská časť Ružinov</strong>.</p>
+      <p>KT Fitness 1 s. r. o. je poskytovateľom služby, príjemcom platieb a zmluvnou stranou zákazníka. MAXGYM je obchodné označenie fitness centra. Poskytovateľ rezervačného systému nie je zmluvnou stranou zákazníka.</p>
+
+      <h2 id="zakladne-pojmy">2. Rozsah a základné pojmy</h2>
+      <p>Tieto obchodné podmienky upravujú práva a povinnosti prevádzkovateľa a osoby, ktorá si prostredníctvom webu alebo rezervačného systému objedná službu MAXGYM. Ak fyzická osoba nekoná v rámci podnikania alebo povolania, je spotrebiteľom.</p>
+      <p><strong>Rezerváciou</strong> sa rozumie objednanie vstupu do zvoleného fitness priestoru na konkrétny deň, čas a dĺžku. <strong>Balíčkom</strong> sa rozumie vopred zakúpený počet vstupov, pri ktorých si zákazník rezervuje jednotlivé termíny podľa dostupnosti.</p>
+      <p>Tieto podmienky sú súčasťou zmluvy. Pred odoslaním platenej objednávky dostane zákazník možnosť oboznámiť sa s nimi a uložiť si ich.</p>
+
+      <h2 id="sluzby">3. Poskytované služby</h2>
+      <p>MAXGYM tvoria dva samostatne rezervovateľné privátne fitness priestory: <strong>MAXGYM PRO</strong> a <strong>MAXGYM SOLO</strong>. Pri objednávke si zákazník volí najmä priestor, dátum a čas začiatku, vstup na 75 alebo 150 minút a dostupné nastavenie kapacity.</p>
+      <p>Rezervácia oprávňuje na vstup iba do priestoru a v čase uvedenom v potvrdení. Zakúpenie balíčka samo osebe nezaručuje dostupnosť konkrétneho termínu.</p>
+      <p>Aktuálne vlastnosti služby, dostupnosť, kapacita a konečná cena sú zobrazené v <a href="/test/cennik/">cenníku</a> a v rezervačnom systéme pred odoslaním objednávky.</p>
+
+      <h2 id="objednavka">4. Objednávka a uzatvorenie zmluvy</h2>
+      <p>Rezervácia sa vykonáva prostredníctvom webu MAXGYM a rezervačného systému. Zákazník je povinný zadať pravdivé a úplné údaje a pred odoslaním objednávky skontrolovať zvolený priestor, termín, dĺžku, kapacitu a celkovú cenu.</p>
+      <p>Rezervácia je záväzná a zmluva je uzatvorená po úspešnom zaplatení objednávky a doručení elektronického potvrdenia rezervácie. Neúspešná platba, nedokončená objednávka ani samotné rozpracovanie rezervácie nezakladajú nárok na termín.</p>
+      <p>Potvrdenie rezervácie je zákazníkovi odoslané elektronicky. Obsahuje alebo sprístupňuje údaje o objednanej službe a pravidlá platné pre danú rezerváciu. Zmluva sa uzatvára v slovenskom jazyku.</p>
+
+      <h2 id="ceny">5. Ceny a platba</h2>
+      <p>Ceny sú uvedené v eurách a sú konečné. Pred odoslaním objednávky sa zákazníkovi zobrazí celková cena a dostupný spôsob platby.</p>
+      <div class="price-grid">
+        <article class="price-card">
+          <h3>MAXGYM PRO</h3>
+          <ul>
+            <li>jednorazový vstup 75 minút: 20 €</li>
+            <li>jednorazový vstup 150 minút: 35 €</li>
+            <li>3 × 75 minút, týždenný balíček: 54 €</li>
+            <li>12 × 75 minút, mesačný balíček: 192 €</li>
+            <li>navýšenie kapacity na 4 až 7 osôb: 5 €</li>
+            <li>navýšenie kapacity na 8 a viac osôb: individuálne</li>
+          </ul>
+        </article>
+        <article class="price-card">
+          <h3>MAXGYM SOLO</h3>
+          <ul>
+            <li>jednorazový vstup 75 minút: 10 €</li>
+            <li>jednorazový vstup 150 minút: 17 €</li>
+            <li>3 × 75 minút, týždenný balíček: 27 €</li>
+            <li>12 × 75 minút, mesačný balíček: 96 €</li>
+            <li>navýšenie kapacity na 4 až 7 osôb: 5 €</li>
+          </ul>
+        </article>
+      </div>
+      <p>Rozhodujúca je cena zobrazená zákazníkovi v rezervačnom systéme bezprostredne pred odoslaním objednávky. Dodatočný platený doplnok možno účtovať iba po jeho výslovnom objednaní zákazníkom.</p>
+
+      <h2 id="pristup">6. Prístupový kód a kapacita</h2>
+      <p>Po potvrdení rezervácie dostane zákazník elektronicky prístupové údaje podľa informácií uvedených v potvrdení rezervácie. Prístup je určený iba pre vybraný priestor, rezervovaný čas a počet osôb uvedený v rezervácii.</p>
+      <p>Zákazník nesmie sprístupniť prístupový kód osobe, ktorá nie je súčasťou rezervácie. Zodpovedá za dodržiavanie týchto podmienok aj osobami, ktorým v rámci svojej rezervácie oprávnene umožní vstup.</p>
+      <p>Neskorší príchod nepredlžuje koniec rezervácie. Technický problém so vstupom treba bezodkladne oznámiť na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>.</p>
+
+      <h2 id="bezpecnost">7. Vek, pravidlá používania a bezpečnosť</h2>
+      <p>Rezerváciu môže vytvoriť iba osoba, ktorá dovŕšila 18 rokov. Osoba mladšia ako 18 rokov môže priestor využívať iba za nepretržitej prítomnosti rodiča alebo zákonného zástupcu, ktorý je zahrnutý do povolenej kapacity rezervácie a zodpovedá za dohľad.</p>
+      <p>Zákazník a jeho sprievod sú povinní najmä:</p>
+      <ul>
+        <li>používať priestory a vybavenie iba na určený účel a podľa návodov,</li>
+        <li>dodržiavať bezpečnostné a prevádzkové pokyny oznámené na mieste alebo pred vstupom,</li>
+        <li>rešpektovať rezervovaný čas a objednanú kapacitu,</li>
+        <li>neohrozovať seba, iné osoby ani majetok,</li>
+        <li>bezodkladne oznámiť poruchu, poškodenie, úraz alebo mimoriadnu udalosť,</li>
+        <li>po skončení vstupu odložiť vybavenie a riadne opustiť a zabezpečiť priestor.</li>
+      </ul>
+      <p>Zákazník cvičí s ohľadom na svoj zdravotný stav. V prípade pochybností má vhodnosť cvičenia konzultovať s lekárom. Vstup pod vplyvom alkoholu, omamných alebo psychotropných látok je zakázaný. Pri bezprostrednom ohrození zdravia alebo života treba volať tiesňovú linku 112 alebo 155.</p>
+
+      <h2 id="prekrocenie">8. Prekročenie rezervovaného času</h2>
+      <p>Zákazník musí ukončiť cvičenie, upratať svoje veci a opustiť priestor najneskôr do konca rezervovaného času.</p>
+      <div class="legal-callout">
+        <p><strong>Za prekročenie rezervovaného času môže prevádzkovateľ uplatniť poplatok 20 €.</strong></p>
+        <p>Poplatok možno uplatniť najviac raz za jednu rezerváciu a iba vtedy, ak bol zákazník s touto povinnosťou oboznámený pred odoslaním objednávky. Každý prípad pred uplatnením poplatku overí človek.</p>
+      </div>
+      <p>Poplatok sa neuplatní, ak prekročenie preukázateľne spôsobila technická porucha na strane prevádzkovateľa, núdzová alebo mimoriadna situácia, prípadne iná okolnosť, za ktorú zákazník nezodpovedá. Tým nie je dotknuté právo zákazníka vysvetliť okolnosti prípadu a namietať nesprávne uplatnenie poplatku.</p>
+
+      <h2 id="balicky">9. Balíčky vstupov</h2>
+      <p>Balíček oprávňuje zákazníka využiť počet 75-minútových vstupov uvedený pri kúpe. Konkrétny termín každého vstupu sa rezervuje osobitne podľa dostupnosti.</p>
+      <p>Doba platnosti balíčka a okamih jej začatia sú zákazníkovi zobrazené pred kúpou a uvedené v potvrdení. Po uplynutí tejto doby nevyužité vstupy prepadnú bez náhrady. Balíček sa bez výslovného súhlasu zákazníka automaticky neobnovuje.</p>
+
+      <h2 id="storno">10. Zmena, storno a nedostavenie sa</h2>
+      <p>Rezerváciu možno zmeniť alebo zrušiť iba vtedy, ak je taká možnosť dostupná pri danej rezervácii v rezervačnom systéme, a podľa pravidiel zobrazených zákazníkovi pred zaplatením a v potvrdení rezervácie.</p>
+      <p>Ak sa zákazník na rezervovaný termín nedostaví a rezerváciu riadne nezruší podľa zobrazených pravidiel, zaplatená cena alebo príslušný vstup z balíčka prepadne bez náhrady. Neskorší príchod sa nepovažuje za dôvod na predĺženie rezervácie ani vrátenie pomernej časti ceny.</p>
+      <p>Zmluvná možnosť zmeny alebo storna podľa tohto článku je odlišná od zákonného práva spotrebiteľa na odstúpenie od zmluvy.</p>
+
+      <h2 id="odstupenie">11. Odstúpenie spotrebiteľa od zmluvy</h2>
+      <p>Pri rezervácii fitness priestoru na presne určený deň a čas sa uplatní zákonná výnimka pre službu súvisiacu s činnosťami v rámci voľného času poskytovanú v presne dohodnutom čase alebo lehote. V rozsahu tejto výnimky spotrebiteľ nemá právo odstúpiť od zmluvy bez uvedenia dôvodu v 14-dňovej lehote. Tým nie je dotknuté právo reklamovať neposkytnutú alebo vadne poskytnutú službu ani prípadná možnosť storna podľa článku 10.</p>
+      <p>Pri kúpe balíčka bez vopred určených termínov sa právo na odstúpenie posudzuje podľa zákona č. 108/2024 Z. z. o ochrane spotrebiteľa. Ak sú splnené zákonné podmienky, spotrebiteľ môže od zmluvy uzatvorenej na diaľku odstúpiť do 14 dní. Ak na jeho výslovnú žiadosť začalo poskytovanie služby pred uplynutím tejto lehoty, môže byť povinný uhradiť primeranú cenu za skutočne poskytnuté plnenie.</p>
+      <p>Odstúpenie možno doručiť na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> alebo poštou na adresu sídla prevádzkovateľa. Ak sa právo na odstúpenie uplatní, platba sa vráti spôsobom a v lehote ustanovenej zákonom.</p>
+
+      <div class="withdrawal-form">
+        <h3>Vzorový formulár na odstúpenie od zmluvy</h3>
+        <p>Tento formulár použite iba v prípade, že máte podľa zákona právo odstúpiť od zmluvy.</p>
+        <p><strong>Komu:</strong><br>
+          KT Fitness 1 s. r. o.<br>
+          Doležalova 3424/15C, 821 04 Bratislava – mestská časť Ružinov<br>
+          E-mail: maxgym@maxgym.sk
+        </p>
+        <p>Týmto oznamujem, že odstupujem od zmluvy o poskytnutí nasledujúcej služby alebo kúpe balíčka:</p>
+        <ul>
+          <li>názov služby alebo balíčka,</li>
+          <li>číslo a dátum objednávky,</li>
+          <li>meno a priezvisko spotrebiteľa,</li>
+          <li>adresa spotrebiteľa,</li>
+          <li>e-mail použitý pri objednávke,</li>
+          <li>dátum,</li>
+          <li>podpis spotrebiteľa, iba ak sa formulár podáva v listinnej podobe.</li>
+        </ul>
+      </div>
+
+      <h2 id="zrusenie">12. Zrušenie zo strany prevádzkovateľa a technické problémy</h2>
+      <p>Prevádzkovateľ môže rezerváciu zrušiť, ak jej uskutočneniu bráni technická porucha, havária, bezpečnostné riziko alebo iná závažná okolnosť. Zákazníkovi bez zbytočného odkladu ponúkne porovnateľný náhradný termín alebo vrátenie celej ceny za neposkytnutú službu; voľba patrí zákazníkovi.</p>
+      <p>Ak prístupový systém neumožní vstup napriek platnej rezervácii, zákazník oznámi problém bezodkladne na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>. Prevádzkovateľ situáciu preverí podľa dostupných podkladov a poskytne primeranú nápravu.</p>
+
+      <h2 id="reklamacie">13. Reklamácie</h2>
+      <p>Zákazník môže reklamovať neposkytnutie služby, znemožnenie vstupu, podstatnú poruchu vybavenia alebo inú vadu služby. Reklamáciu možno uplatniť e-mailom na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> alebo písomne na adrese sídla prevádzkovateľa.</p>
+      <p>Reklamácia by mala obsahovať údaje potrebné na identifikáciu zákazníka a rezervácie, opis problému, dátum a čas jeho vzniku, požadovanú nápravu a dostupné podklady. Postup, lehoty a možné spôsoby nápravy upravuje <a href="/test/reklamacny-poriadok/">Reklamačný poriadok MAXGYM</a>.</p>
+
+      <h2 id="zodpovednost">14. Zodpovednosť a škoda</h2>
+      <p>Prevádzkovateľ zodpovedá za splnenie svojich povinností, vady služby a škodu podľa všeobecne záväzných právnych predpisov. Zákonnú zodpovednosť za smrť, ujmu na zdraví, vady služby ani inú škodu nemožno vopred vylúčiť v neprospech spotrebiteľa.</p>
+      <p>Prevádzkovateľ nezodpovedá za ujmu, ktorú preukázateľne a výlučne spôsobí zákazník porušením bezpečnostných pokynov, použitím zariadenia v rozpore s návodom alebo vstupom pod vplyvom alkoholu či iných návykových látok. Tým nie je dotknutá zodpovednosť prevádzkovateľa za nebezpečný stav priestoru alebo zariadenia.</p>
+      <p>Zákazník zodpovedá za preukázanú škodu, ktorú spôsobí porušením svojich povinností, v rozsahu podľa právnych predpisov. Zodpovednosť prevádzkovateľa za veci vnesené alebo odložené v prevádzke sa riadi zákonom.</p>
+
+      <h2 id="osobne-udaje">15. Ochrana osobných údajov</h2>
+      <p>Informácie o spracúvaní osobných údajov, používaní rezervačného a prístupového systému a kamerovom systéme sú uvedené v dokumente <a href="/test/ochrana-osobnych-udajov/">Ochrana osobných údajov</a>.</p>
+
+      <h2 id="dohlad">16. Dohľad a alternatívne riešenie sporov</h2>
+      <p>Orgánom dohľadu v rozsahu jeho zákonnej pôsobnosti je <strong>Slovenská obchodná inšpekcia, Inšpektorát SOI pre Bratislavský kraj, Bajkalská 21/A, 827 99 Bratislava</strong>. Aktuálne kontakty a informácie sú dostupné na <a href="https://www.soi.sk/" rel="noopener noreferrer">www.soi.sk</a>.</p>
+      <p>Ak spotrebiteľ nie je spokojný s vybavením reklamácie alebo sa domnieva, že prevádzkovateľ porušil jeho práva, môže prevádzkovateľa požiadať o nápravu. Ak prevádzkovateľ žiadosť zamietne alebo na ňu neodpovie do 30 dní, spotrebiteľ môže podať návrh na alternatívne riešenie sporu príslušnému subjektu podľa zákona č. 391/2015 Z. z.</p>
+      <p>Zoznam subjektov alternatívneho riešenia spotrebiteľských sporov vedie <a href="https://www.mhsr.sk/obchod/ochrana-spotrebitela/alternativne-riesenie-spotrebitelskych-sporov-1/zoznam-subjektov-alternativneho-riesenia-spotrebitelskych-sporov-1" rel="noopener noreferrer">Ministerstvo hospodárstva Slovenskej republiky</a>. Príslušným subjektom môže byť Slovenská obchodná inšpekcia alebo iný subjekt uvedený v tomto zozname.</p>
+
+      <h2 id="zaver">17. Záverečné ustanovenia</h2>
+      <p>Zmluvné vzťahy sa riadia právnym poriadkom Slovenskej republiky, najmä Občianskym zákonníkom, zákonom č. 108/2024 Z. z. o ochrane spotrebiteľa a zákonom č. 22/2004 Z. z. o elektronickom obchode. Voľba slovenského práva nezbavuje spotrebiteľa ochrany, ktorú mu poskytujú záväzné právne predpisy štátu jeho obvyklého pobytu.</p>
+      <p>Zmena týchto podmienok nemá spätný účinok na už uzatvorené zmluvy. Pre konkrétnu rezerváciu alebo balíček je rozhodujúce znenie platné v okamihu uzatvorenia zmluvy. Neplatnosť alebo nevykonateľnosť jedného ustanovenia nemá vplyv na ostatné ustanovenia, ak môžu samostatne obstáť.</p>
+      <p>Aktuálne znenie podmienok je zverejnené na tejto stránke s uvedením čísla verzie a dátumu účinnosti.</p>
+
+      <div class="legal-contact">
+        <strong>Kontakt pre objednávky a obchodné podmienky</strong>
+        <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>
+      </div>
+    </div>
+  </section>
+</main>
+
 <footer id="kontakt">
   <div class="container">
-    <p class="copy">© MaxGym 2026 · Klincová 37, 821 08 Bratislava-Ružinov</p>
+    <p class="copy">© MaxGym 2026 · Klincová 16637/37B, 821 08 Bratislava-Ružinov</p>
   </div>
 </footer>
 <script src="/test/assets/js/main.js"></script>
