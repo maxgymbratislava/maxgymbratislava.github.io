@@ -5,17 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0A0908">
   <title>REKLAMAČNÝ PORIADOK | MaxGym Bratislava</title>
+  <meta name="description" content="Reklamačný poriadok fitness centra MAXGYM Bratislava. Informácie o uplatnení reklamácie, jej posúdení a spôsoboch nápravy.">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/test/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/test/assets/css/style.css">
+  <style>
+    .container.complaints-page { max-width: 900px; }
+    .complaints-page h3 { margin-bottom: 10px; color: var(--text); font-size: 1rem; }
+    .complaints-page ol { padding-left: 22px; }
+    .complaints-page a { color: var(--red); text-underline-offset: .2em; }
+    .complaints-page address { margin-bottom: 18px; font-style: normal; font-size: .93rem; }
+    .complaints-page h2[id] { scroll-margin-top: 90px; }
+    .complaints-page .legal-meta { margin-top: -20px; color: var(--muted); }
+    .complaints-page .legal-lead { max-width: 760px; font-size: 1rem; }
+    .legal-toc { margin: 28px 0 34px; padding: 20px 24px; border: 1px solid #2d2826; border-radius: 6px; background: var(--card); }
+    .legal-toc strong { display: block; margin-bottom: 8px; }
+    .legal-toc ol { columns: 2; column-gap: 40px; }
+    .legal-toc li { break-inside: avoid; margin-bottom: 4px; }
+    .legal-callout { margin: 18px 0; padding: 18px 20px; border-left: 3px solid var(--red); border-radius: 0 6px 6px 0; background: var(--card); }
+    .legal-callout p:last-child { margin-bottom: 0; }
+    .legal-contact { display: flex; flex-direction: column; gap: 4px; margin-top: 38px; padding: 20px 24px; border-radius: 6px; background: var(--card); }
+    @media (max-width: 820px) { .legal-toc ol { columns: 1; } }
+  </style>
 </head>
 <body>
 <header>
   <nav class="nav">
     <a class="logo-text" href="/test/">max<span>gym</span></a>
-    <button class="nav-toggle" aria-label="Menu">☰</button>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">☰</button>
     <ul>
       <li><a href="/test/rezervacia/">REZERVÁCIA</a></li>
       <li><a href="/test/uzitocne-info/">UŽITOČNÉ INFO</a></li>
@@ -26,16 +45,199 @@
     </ul>
   </nav>
 </header>
-<section>
-  <div class="container legal">
-    <h1>REKLAMAČNÝ PORIADOK</h1>
-    <p class="note">Dokument pripravujeme — kompletné znenie zverejníme pred otvorením prevádzky (1. 9. 2026).</p>
-    <p style="margin-top:20px">V prípade otázok nás kontaktuj na <a href="mailto:maxgym@maxgym.sk" style="color:var(--red)">maxgym@maxgym.sk</a>.</p>
-  </div>
-</section>
+
+<main>
+  <section>
+    <div class="container legal complaints-page">
+      <h1>REKLAMAČNÝ PORIADOK</h1>
+      <p class="legal-meta">Verzia 1.0 · Účinnosť od 21. 10. 2026</p>
+      <p class="legal-lead">Tento reklamačný poriadok vysvetľuje, ako možno vytknúť vadu služby MAXGYM, akým spôsobom reklamáciu posudzujeme a akú nápravu môže zákazník požadovať.</p>
+
+      <nav class="legal-toc" aria-label="Obsah dokumentu">
+        <strong>Obsah</strong>
+        <ol>
+          <li><a href="#prevadzkovatel">Prevádzkovateľ</a></li>
+          <li><a href="#ucel">Účel a rozsah</a></li>
+          <li><a href="#zodpovednost">Zodpovednosť za vady</a></li>
+          <li><a href="#co-reklamovat">Čo možno reklamovať</a></li>
+          <li><a href="#nie-je-vadou">Čo nie je vadou</a></li>
+          <li><a href="#bezodkladne-hlasenie">Bezodkladné hlásenie</a></li>
+          <li><a href="#uplatnenie">Ako uplatniť reklamáciu</a></li>
+          <li><a href="#potvrdenie">Potvrdenie a lehota</a></li>
+          <li><a href="#posudenie">Posúdenie reklamácie</a></li>
+          <li><a href="#naprava">Spôsoby nápravy</a></li>
+          <li><a href="#osobitne-situacie">Osobitné situácie</a></li>
+          <li><a href="#vysledok">Výsledok reklamácie</a></li>
+          <li><a href="#skoda">Škoda a ujma na zdraví</a></li>
+          <li><a href="#ars">Alternatívne riešenie sporu</a></li>
+          <li><a href="#osobne-udaje">Ochrana osobných údajov</a></li>
+          <li><a href="#zaverecne">Záverečné ustanovenia</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="prevadzkovatel">1. Prevádzkovateľ</h2>
+      <p>Poskytovateľom služieb fitness centra MAXGYM a osobou zodpovednou za vybavovanie reklamácií je:</p>
+      <address>
+        <strong>KT Fitness 1 s. r. o.</strong><br>
+        Doležalova 3424/15C, 821 04 Bratislava – mestská časť Ružinov<br>
+        IČO: 57 726 728<br>
+        Zapísaná v Obchodnom registri Mestského súdu Bratislava III, oddiel Sro, vložka č. 201398/B<br>
+        E-mail pre reklamácie: <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a><br>
+        Web: <a href="https://www.maxgym.sk/">www.maxgym.sk</a>
+      </address>
+      <p>Miesto poskytovania služieb: <strong>MAXGYM, Klincová 16637/37B, 821 08 Bratislava – mestská časť Ružinov.</strong></p>
+
+      <h2 id="ucel">2. Účel a rozsah reklamačného poriadku</h2>
+      <p>Tento reklamačný poriadok upravuje postup pri uplatňovaní a vybavovaní práv z vád služieb MAXGYM, najmä jednorazových vstupov a vstupov čerpaných z balíčka.</p>
+      <p>Služba má zodpovedať potvrdenej rezervácii, najmä zvolenému fitness centru MAXGYM PRO alebo MAXGYM SOLO, rezervovanému dátumu, času, dĺžke, zaplatenému rozsahu a vlastnostiam, ktoré prevádzkovateľ uviedol pred uzatvorením zmluvy.</p>
+      <p>Reklamácia vady služby nie je to isté ako zrušenie alebo zmena rezervácie zákazníkom, nedostavenie sa na rezervovaný termín, odstúpenie od zmluvy ani uplatnenie nároku na náhradu škody alebo ujmy na zdraví. Uplatnenie reklamácie nevylučuje iné práva zákazníka podľa právnych predpisov.</p>
+      <p>Tento reklamačný poriadok neobmedzuje zákonné práva spotrebiteľa ani zákonnú zodpovednosť prevádzkovateľa.</p>
+
+      <h2 id="zodpovednost">3. Zodpovednosť za vady služby</h2>
+      <p>Prevádzkovateľ zodpovedá za to, že služba bude poskytnutá bezpečne, s odbornou starostlivosťou a v súlade s potvrdenou rezerváciou a informáciami poskytnutými zákazníkovi pred uzatvorením zmluvy.</p>
+      <p>Pri posudzovaní vady sa prihliada najmä na povahu rezervovanej služby, závažnosť a trvanie problému, jeho vplyv na možnosť službu využiť a na to, či príčina vznikla na strane prevádzkovateľa, zákazníka alebo tretej osoby.</p>
+      <p>Zodpovednosť za vady jednorazovej služby sa viaže na dobu, v ktorej má byť konkrétna služba podľa zmluvy riadne poskytnutá; pri rezervovanom vstupe ide o celý rezervovaný časový úsek. Prevádzkovateľ zodpovedá za vady, ktoré sa vyskytli pri poskytovaní služby alebo vznikli porušením jeho povinností pri jej poskytovaní.</p>
+      <p>Zákazník môže vadu vytknúť aj po skončení rezervovaného vstupu. Mal by tak urobiť bez zbytočného odkladu po jej zistení, aby bolo možné vadu riadne posúdiť. Skončením rezervovaného vstupu ani týmto odporúčaním nie sú dotknuté zákonné práva zákazníka ani zákonné premlčacie lehoty.</p>
+
+      <h2 id="co-reklamovat">4. Čo možno reklamovať</h2>
+      <p>Zákazník môže reklamovať najmä:</p>
+      <ul>
+        <li>potvrdenú a zaplatenú rezerváciu, ku ktorej mu bez jeho zavinenia nebol umožnený vstup,</li>
+        <li>nedoručenie použiteľného prístupového PIN kódu včas alebo nefunkčný PIN kód, ak zákazník uviedol správne kontaktné údaje a dodržal pokyny,</li>
+        <li>nefunkčný zámok alebo nemožnosť otvoriť dvere potrebné na vstup do rezervovaného priestoru,</li>
+        <li>neposkytnutie rezervovaného priestoru alebo zrušenie rezervácie zo strany prevádzkovateľa,</li>
+        <li>skrátenie rezervovaného času z dôvodu na strane prevádzkovateľa,</li>
+        <li>súbežnú rezerváciu alebo prítomnosť inej neoprávnenej osoby, ktorá podstatne naruší sľúbené súkromné užívanie priestoru,</li>
+        <li>závažnú technickú poruchu, výpadok elektrickej energie, nebezpečný alebo hygienicky nevyhovujúci stav, ktorý podstatne znemožní bezpečné využitie služby,</li>
+        <li>závažnú poruchu zariadenia, ktorá vzhľadom na rozsah a účel rezervácie podstatne obmedzí využitie služby,</li>
+        <li>nesprávne alebo duplicitné účtovanie platby súvisiacej so službou,</li>
+        <li>chybné odpočítanie vstupu z balíčka alebo technicky nesprávne vyhodnotenie jeho platnosti,</li>
+        <li>inú preukázateľnú odchýlku od potvrdenej rezervácie alebo dohodnutých vlastností služby.</li>
+      </ul>
+      <div class="legal-callout">
+        <p><strong>Porucha jedného zariadenia sama osebe neznamená automaticky bezplatný vstup ani vadu celej služby.</strong> Posudzuje sa význam zariadenia pre dohodnutý rozsah služby a to, či bolo možné priestor primerane využívať aj napriek poruche.</p>
+      </div>
+
+      <h2 id="nie-je-vadou">5. Situácie, ktoré samy osebe nie sú vadou služby</h2>
+      <p>Za vadu služby sa spravidla nepovažuje najmä:</p>
+      <ul>
+        <li>neskorý príchod zákazníka; ten nepredlžuje koniec rezervácie,</li>
+        <li>nedostavenie sa zákazníka na rezervovaný termín,</li>
+        <li>výber nesprávneho fitness centra, dátumu, času alebo dĺžky zákazníkom, ak rezervačný systém zobrazil voľbu správne,</li>
+        <li>zadanie nesprávneho e-mailu alebo iných kontaktných údajov zákazníkom,</li>
+        <li>problém so zariadením, internetovým pripojením alebo e-mailovou schránkou zákazníka,</li>
+        <li>použitie nesprávneho PIN kódu alebo nedodržanie jasných pokynov na vstup,</li>
+        <li>subjektívna nespokojnosť, ak služba objektívne zodpovedala rezervácii a dohodnutým vlastnostiam.</li>
+      </ul>
+      <p>Každý prípad sa posudzuje podľa jeho skutočných okolností. Uvedené situácie nemožno použiť na odmietnutie reklamácie, ak problém preukázateľne spôsobil prevádzkovateľ alebo technický systém, za ktorý zodpovedá.</p>
+      <p>Ak zákazník službu nevyužil pre vlastné nedostavenie sa, platba alebo príslušný vstup z balíčka prepadne podľa <a href="/test/obchodne-podmienky/">obchodných podmienok</a>. Toto pravidlo sa neuplatní, ak využitie služby znemožnila preukázaná vada na strane prevádzkovateľa.</p>
+
+      <h2 id="bezodkladne-hlasenie">6. Bezodkladné hlásenie problému počas rezervácie</h2>
+      <p>Ak zákazník nemôže vstúpiť, zistí nebezpečný stav alebo inú vadu, ktorú možno riešiť počas rezervácie, oznámi ju bezodkladne e-mailom na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>.</p>
+      <p>Bezodkladné oznámenie umožňuje prevádzkovateľovi pokúsiť sa o okamžitú nápravu a zachytiť technický stav. Neskoršie oznámenie samo osebe neruší zákonné právo zákazníka vytknúť vadu, môže však sťažiť jej objektívne posúdenie.</p>
+      <div class="legal-callout">
+        <p><strong>Pri bezprostrednom ohrození zdravia alebo života</strong> zákazník prestane používať dotknuté zariadenie alebo priestor a volá tiesňovú linku <strong>112</strong> alebo <strong>155</strong>.</p>
+      </div>
+
+      <h2 id="uplatnenie">7. Ako uplatniť reklamáciu</h2>
+      <p>Reklamáciu možno uplatniť:</p>
+      <ul>
+        <li>e-mailom na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>,</li>
+        <li>písomne na adrese sídla KT Fitness 1 s. r. o., Doležalova 3424/15C, 821 04 Bratislava – mestská časť Ružinov.</li>
+      </ul>
+      <p>Osobné podanie v bezobslužnom fitness centre sa neposkytuje. Tým nie je dotknuté právo zákazníka oznámiť naliehavý prevádzkový problém počas rezervácie podľa článku 6.</p>
+      <p>Reklamácia by mala obsahovať najmä:</p>
+      <ul>
+        <li>meno a priezvisko zákazníka,</li>
+        <li>e-mail použitý pri rezervácii,</li>
+        <li>číslo alebo iný identifikátor rezervácie,</li>
+        <li>označenie MAXGYM PRO alebo MAXGYM SOLO,</li>
+        <li>dátum a čas rezervácie,</li>
+        <li>opis vady a čas, keď sa prejavila,</li>
+        <li>požadovaný spôsob nápravy,</li>
+        <li>dostupné podklady, napríklad fotografiu, video, snímku obrazovky alebo súvisiacu komunikáciu.</li>
+      </ul>
+      <p>Ak reklamáciu možno spoľahlivo identifikovať aj bez niektorého z odporúčaných údajov, jeho absencia nie je automatickým dôvodom na odmietnutie. Prevádzkovateľ môže zákazníka požiadať o primerané doplnenie údajov potrebných na posúdenie prípadu.</p>
+
+      <h2 id="potvrdenie">8. Potvrdenie o vytknutí vady a lehota</h2>
+      <p>Prevádzkovateľ bezodkladne poskytne zákazníkovi písomné potvrdenie o vytknutí vady služby, spravidla e-mailom na adresu uvedenú zákazníkom.</p>
+      <p>Potvrdenie obsahuje najmä dátum prijatia, identifikáciu zákazníka a rezervácie, opis vytknutej vady, požadovaný spôsob nápravy a lehotu, v ktorej prevádzkovateľ vadu odstráni. Táto lehota nesmie byť dlhšia ako 30 dní odo dňa vytknutia vady služby.</p>
+      <p>Automatické potvrdenie prijatia správy nenahrádza úplné potvrdenie, ak neobsahuje všetky potrebné údaje a konkrétnu lehotu.</p>
+
+      <h2 id="posudenie">9. Posúdenie reklamácie</h2>
+      <p>Prevádzkovateľ posúdi reklamáciu nestranne podľa dostupných skutočností. Podľa povahy prípadu preverí najmä potvrdenie rezervácie, platbu, odoslanie PIN kódu, prístupové a technické záznamy, hlásenia o výpadku, stav priestoru a komunikáciu so zákazníkom.</p>
+      <p>Technické záznamy nie sú jediným prípustným podkladom. Prevádzkovateľ zohľadní aj dôkazy zákazníka a okolnosti prípadu a neprenesie na spotrebiteľa dôkazné povinnosti, ktoré podľa zákona nesie prevádzkovateľ.</p>
+      <p>Zákazník poskytne primeranú súčinnosť potrebnú na identifikáciu rezervácie a posúdenie vady. Prevádzkovateľ od neho nebude požadovať podklady, ktoré má alebo môže primerane získať zo svojich systémov.</p>
+
+      <h2 id="naprava">10. Spôsoby nápravy</h2>
+      <p>Spôsob nápravy závisí od povahy, závažnosti a odstrániteľnosti vady a od zákonných práv zákazníka. Môže ním byť najmä:</p>
+      <ul>
+        <li>okamžité umožnenie vstupu, ak je to ešte bezpečné a účelné,</li>
+        <li>predĺženie aktuálneho vstupu, ak tým nebude dotknutá nasledujúca rezervácia,</li>
+        <li>náhradný porovnateľný termín,</li>
+        <li>vrátenie chybne odpočítaného vstupu do balíčka,</li>
+        <li>primeraná zľava z ceny,</li>
+        <li>vrátenie časti alebo celej zaplatenej ceny.</li>
+      </ul>
+      <div class="legal-callout">
+        <p><strong>Ak zákazník bez svojho zavinenia nemohol rezervovanú službu vôbec využiť z dôvodu na strane prevádzkovateľa,</strong> prevádzkovateľ mu poskytne podľa jeho voľby náhradný porovnateľný vstup alebo vrátenie celej ceny za neposkytnutú službu.</p>
+      </div>
+      <p>Pri podstatnom skrátení vstupu, narušení sľúbeného súkromia alebo inom podstatnom obmedzení prevádzkovateľ poskytne primeranú nápravu podľa okolností, najmä náhradný vstup, primeranú zľavu alebo vrátenie ceny zodpovedajúcej neposkytnutej časti služby.</p>
+      <p>Pri chybnej platbe alebo neoprávnenom odpočítaní vstupu prevádzkovateľ vykoná opravu bez zbytočného odkladu po uznaní reklamácie. Schválenú refundáciu vykoná bez zbytočného odkladu, spravidla rovnakým platobným prostriedkom, ak sa so zákazníkom nedohodne inak a zákon neustanovuje inak.</p>
+      <p>Uvedené spôsoby nápravy neobmedzujú ďalšie práva zákazníka podľa všeobecne záväzných právnych predpisov.</p>
+
+      <h2 id="osobitne-situacie">11. Osobitné situácie</h2>
+      <h3>11.1. Nefunkčný vstup alebo PIN</h3>
+      <p>Prevádzkovateľ preverí najmä stav rezervácie a platby, správnosť kontaktného údaja, odoslanie PIN kódu a prístupové záznamy. Ak sa prístup nepodarí obnoviť v čase, keď má služba pre zákazníka význam, postupuje sa podľa bodu 10.</p>
+      <h3>11.2. Skrátenie času</h3>
+      <p>Ak bol vstup z dôvodu na strane prevádzkovateľa sprístupnený neskoro alebo predčasne ukončený, každý prípad sa posúdi individuálne podľa skutočne strateného času a vplyvu na využitie služby.</p>
+      <h3>11.3. Súbežná rezervácia alebo cudzia osoba</h3>
+      <p>Ak iná neoprávnená osoba podstatne naruší sľúbené súkromné užívanie fitness centra, prevádzkovateľ preverí rezervačné a prístupové záznamy a poskytne primeranú nápravu podľa článku 10.</p>
+      <h3>11.4. Porucha vybavenia</h3>
+      <p>Zákazník prestane používať zariadenie, ktoré sa javí ako nebezpečné, a poruchu bezodkladne oznámi. Náprava sa posúdi podľa závažnosti poruchy a miery, v akej ovplyvnila využiteľnosť celej služby. Porucha jedného stroja neznamená automaticky nárok na bezplatný vstup.</p>
+      <h3>11.5. Zrušenie alebo odstávka</h3>
+      <p>Ak prevádzkovateľ rezerváciu zruší alebo službu neposkytne pre technickú poruchu, haváriu, bezpečnostné riziko alebo inú mimoriadnu okolnosť, zákazníkovi poskytne podľa jeho voľby náhradný porovnateľný termín alebo vrátenie celej ceny za neposkytnutú službu.</p>
+
+      <h2 id="vysledok">12. Výsledok reklamácie</h2>
+      <p>Prevádzkovateľ oznámi zákazníkovi výsledok reklamácie písomne, spravidla e-mailom, a uvedie uznanú nápravu a spôsob jej vykonania.</p>
+      <p>Ak prevádzkovateľ zodpovednosť za vadu odmietne, oznámi zákazníkovi dôvody písomne. Všeobecné oznámenie bez konkrétneho odôvodnenia sa nepovažuje za dostatočné.</p>
+      <p>V prípade uznanej reklamácie zákazníkovi nevzniká poplatok za jej uplatnenie alebo vybavenie.</p>
+
+      <h2 id="skoda">13. Škoda, ujma na zdraví a odložené veci</h2>
+      <p>Tento reklamačný poriadok neupravuje vyčerpávajúcim spôsobom nároky na náhradu škody alebo ujmy na zdraví. Takýto nárok možno oznámiť rovnakými kontaktnými kanálmi; prevádzkovateľ ho posúdi podľa príslušných právnych predpisov.</p>
+      <p>Žiadne ustanovenie tohto reklamačného poriadku nevylučuje ani neobmedzuje zákonnú zodpovednosť prevádzkovateľa za bezpečnosť služby, vady, škodu alebo ujmu na zdraví.</p>
+
+      <h2 id="ars">14. Žiadosť o nápravu a alternatívne riešenie sporu</h2>
+      <p>Ak spotrebiteľ nie je spokojný so spôsobom vybavenia reklamácie alebo sa domnieva, že prevádzkovateľ porušil jeho práva, môže prevádzkovateľovi zaslať žiadosť o nápravu na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> alebo na adresu jeho sídla.</p>
+      <p>Ak prevádzkovateľ na žiadosť o nápravu odpovie zamietavo alebo na ňu neodpovie do 30 dní odo dňa jej odoslania, spotrebiteľ môže podať návrh na začatie alternatívneho riešenia sporu príslušnému subjektu alternatívneho riešenia spotrebiteľských sporov.</p>
+      <p>Spotrebiteľ si môže zvoliť príslušný subjekt, ak je ich oprávnených viac. Pre bežný spotrebiteľský spor s prevádzkovateľom môže byť príslušným reziduálnym subjektom Slovenská obchodná inšpekcia.</p>
+      <ul>
+        <li><a href="https://www.mhsr.sk/obchod/ochrana-spotrebitela/alternativne-riesenie-spotrebitelskych-sporov-1/zoznam-subjektov-alternativneho-riesenia-spotrebitelskych-sporov-1" rel="noopener noreferrer">Zoznam subjektov alternatívneho riešenia spotrebiteľských sporov – Ministerstvo hospodárstva SR</a></li>
+        <li><a href="https://www.soi.sk/alternativne-riesenie-spotrebitelskych-sporov/pravidla-ars" rel="noopener noreferrer">Informácie Slovenskej obchodnej inšpekcie o alternatívnom riešení sporov</a></li>
+      </ul>
+      <p>Alternatívne riešenie sporu nevylučuje možnosť obrátiť sa na súd.</p>
+
+      <h2 id="osobne-udaje">15. Ochrana osobných údajov</h2>
+      <p>Osobné údaje súvisiace s reklamáciou prevádzkovateľ spracúva na účely jej prijatia, posúdenia, vybavenia, preukázania splnenia zákonných povinností a ochrany právnych nárokov.</p>
+      <p>Podrobnosti sú uvedené v dokumente <a href="/test/ochrana-osobnych-udajov/">Ochrana osobných údajov</a>.</p>
+
+      <h2 id="zaverecne">16. Záverečné ustanovenia</h2>
+      <p>Tento reklamačný poriadok tvorí súčasť <a href="/test/obchodne-podmienky/">obchodných podmienok MAXGYM</a>. V prípade rozporu sa použije výklad, ktorý neobmedzuje zákonné práva spotrebiteľa.</p>
+      <p>Znenie účinné v čase uzatvorenia zmluvy sa použije na posúdenie práv a povinností z danej rezervácie. Neskoršia zmena reklamačného poriadku nemá spätný účinok.</p>
+      <p>Aktuálne znenie je zverejnené na tejto stránke a zákazník ho musí mať možnosť pred odoslaním objednávky uložiť alebo reprodukovať.</p>
+      <p>Tento reklamačný poriadok nadobúda účinnosť 21. 10. 2026.</p>
+
+      <div class="legal-contact">
+        <strong>Kontakt pre reklamácie</strong>
+        <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a>
+      </div>
+    </div>
+  </section>
+</main>
+
 <footer id="kontakt">
   <div class="container">
-    <p class="copy">© MaxGym 2026 · Klincová 37, 821 08 Bratislava-Ružinov</p>
+    <p class="copy">© MaxGym 2026 · Klincová 16637/37B, 821 08 Bratislava-Ružinov</p>
   </div>
 </footer>
 <script src="/test/assets/js/main.js"></script>
