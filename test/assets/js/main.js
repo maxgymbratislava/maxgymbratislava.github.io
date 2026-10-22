@@ -1,6 +1,61 @@
 // Mobilní navigace
 const toggle = document.querySelector('.nav-toggle');
 const menu = document.querySelector('.nav ul');
+
+// Centrální telefonní kontakt MAXGYM
+const phoneLabel = '+421 948 681 068';
+const phoneHref = 'tel:+421948681068';
+
+const createPhoneLink = () => {
+  const link = document.createElement('a');
+  link.href = phoneHref;
+  link.textContent = phoneLabel;
+  return link;
+};
+
+document.querySelectorAll('.contact').forEach((contact) => {
+  if (contact.querySelector(`a[href="${phoneHref}"]`)) return;
+
+  const emailRow = contact.querySelector('a[href^="mailto:"]')?.closest('p');
+  if (!emailRow) return;
+
+  const phoneRow = document.createElement('p');
+  phoneRow.style.marginTop = '10px';
+  phoneRow.append(createPhoneLink());
+  emailRow.insertAdjacentElement('afterend', phoneRow);
+});
+
+document.querySelectorAll('.legal-contact').forEach((contact) => {
+  if (!contact.querySelector(`a[href="${phoneHref}"]`)) {
+    contact.append(createPhoneLink());
+  }
+});
+
+document.querySelectorAll('address').forEach((address) => {
+  if (address.querySelector(`a[href="${phoneHref}"]`)) return;
+
+  address.append(document.createElement('br'));
+  address.append(document.createTextNode('Telefón: '));
+  address.append(createPhoneLink());
+});
+
+document.querySelectorAll('p').forEach((paragraph) => {
+  if (paragraph.textContent.includes('Núdzové telefónne číslo doplníme pred otvorením.')) {
+    paragraph.innerHTML = '<strong>Riešenie problémov:</strong> Ak narazíš na problém so zámkom alebo vybavením, napíš nám na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> alebo zavolaj na <a href="tel:+421948681068">+421 948 681 068</a>.';
+  }
+});
+
+if (document.documentElement.lang === 'en' && window.location.pathname.includes('/en/uzitocne-info/')) {
+  const trainingBlock = [...document.querySelectorAll('.info-block')]
+    .find((block) => block.querySelector('h2')?.textContent.trim() === 'TRAINING');
+
+  if (trainingBlock && !trainingBlock.querySelector(`a[href="${phoneHref}"]`)) {
+    const paragraph = document.createElement('p');
+    paragraph.innerHTML = '<strong>Troubleshooting:</strong> If you have a problem with the lock or equipment, email us at <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> or call <a href="tel:+421948681068">+421 948 681 068</a>.';
+    trainingBlock.append(paragraph);
+  }
+}
+
 if (toggle && menu) {
   if (!menu.id) menu.id = 'site-menu';
   toggle.setAttribute('aria-controls', menu.id);
