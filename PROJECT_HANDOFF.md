@@ -183,8 +183,22 @@ a informací o nepřipojených online platbách a zámcích. Tyto webové změny
 nebyly nasazeny. Právní dokumenty se neměnily; před ostrým veřejným spuštěním je
 nutné sladit jejich požadavek platby a přístupu PINem s dočasným režimem.
 
-Petr schválil testovací rezervace TEST MaxGym na maxgym@maxgym.sk a jejich storno.
-Veřejný formulář je připraven na Pro 150 minut dne 26. 10. 2026 10:00–12:30.
-Zatím nebyl odeslán: čeká na výslovné potvrzení přijetí klientských podmínek
-SimplyBook a storno pravidla. Dokončení rezervace, skutečné blokování překryvů,
-souběh Pro/Solo, doručení potvrzení a storno ještě nejsou ověřeny úplným průchodem.
+Petr výslovně schválil testovací rezervace TEST MaxGym na maxgym@maxgym.sk,
+veřejný telefon fitka, přijetí klientských podmínek SimplyBook a storno pravidla.
+Úplný průchod veřejným formulářem 24. 10. 2026 prošel:
+
+- Pro 150 minut dne 26. 10. 2026 10:00–12:30 potvrzeno v režimu Zaplatit později,
+  bez online platby. Krátké Pro ve stejném prostoru nenabízelo 10:00 ani 11:15;
+  další dostupný začátek byl 12:30.
+- Solo 75 minut dne 26. 10. 2026 10:00–11:15 potvrzeno současně s Pro.
+  Dlouhé Solo ve stejném prostoru nenabízelo překrývající se začátek 10:00.
+- Obě rezervace byly klientským stornem zrušeny s důvodem označeným TEST.
+  Klientský přehled potvrdil, že nezbývají žádné nadcházející rezervace.
+  Čas 10:00 se po obnovení vrátil do nabídky Pro 75 i Solo 150.
+- V protokolu e-mailových notifikací SimplyBook jsou potvrzení i storna pro
+  oba testy na maxgym@maxgym.sk (klientské i provozovatelské kopie).
+  Doručení přímo v cílové schránce nebylo nezávisle ověřeno.
+- Testovací objednávky O-00000001 a O-00000002 zůstávají ve stavu čekající
+  platby i po stornu rezervace. Nebyly označeny jako zaplacené ani smazány.
+  Žádná online platba neproběhla. Jde o účetní záznamy testu, nikoli aktivní
+  rezervace nebo blokované termíny.
