@@ -147,3 +147,44 @@ Po přepnutí domény je nutné:
 - Lokálně projít SK/EN úvod, rezervaci, užitečné info, ceník, vybavení, galerii a právní odkazy.
 - Ověřit mobilní menu, iframe SimplyBook, galerii myší i klávesnicí a chybějící obrázky.
 - Po pushi zkontrolovat běh workflow `Deploy to Cesky hosting` a živý web.
+
+## Rezervace bez zámků — 24. 10. 2026
+
+Petr požaduje nejprve rezervace bez zámků a potvrdil provoz bez online platby.
+V přihlášeném SimplyBook účtu byly skutečně uloženy tyto služby:
+
+| ID služby | Varianta | Délka | Cena | Poskytovatel |
+|---|---|---:|---:|---|
+| 2 | MaxGym Pro – 75 min | 75 min | 20 € | 2 = MaxGym Pro |
+| 4 | MaxGym Pro – 150 min | 150 min | 35 € | 2 = MaxGym Pro |
+| 3 | MaxGym Solo – 75 min | 75 min | 10 € | 3 = MaxGym Solo |
+| 5 | MaxGym Solo – 150 min | 150 min | 17 € | 3 = MaxGym Solo |
+
+- Původní společný poskytovatel byl rozdělen na Pro a Solo, každý s kapacitou
+  jedné rezervace. Obě délky byly přiřazeny výhradně ke správnému prostoru.
+- Společnost i oba poskytovatelé mají Po–Ne 00:00–24:00. Uložení otevírací doby
+  společnosti ověřeno obnovením stránky. Povoleny návštěvy přes půlnoc.
+- Časový krok 15 minut, minimální předstih 30 minut, timezone Europe/Bratislava.
+- Aktivována bezplatná funkce Storno podmínky: 1 den, slovenský souhlas a text
+  „Rezerváciu je možné zrušiť najneskôr 24 hodín pred začiatkom rezervovaného termínu.“
+  Refundace ani vracení vstupů nebyly nově definovány.
+- Platební nastavení ukazuje jedinou metodu „Čekající (Zaplatit později)“.
+  Nebyla připojena nová brána ani zapnuto opakované účtování.
+- Odeslána aktualizace veřejného kontaktu: MaxGym Bratislava,
+  +421 948 681 068 a https://maxgym.sk/. Adresa se neměnila.
+- Veřejný iframe ukazuje všechny čtyři správné délky a ceny, poskytovatele Pro,
+  sobotní a večerní termíny. Veřejný formulář nabízí 150minutový vstup od 23:45.
+- Zapier účet MAXGYM SK: všechny tři dveřní Zapy jsou OFF. Ponechány OFF.
+- SimplyBook zůstává česky; základní výběr jazyků nenabízí slovenštinu.
+
+SK/EN texty rezervace, úvodu a užitečných informací jsou připraveny ve větvi
+`rezervace-bez-zamku`: bez slibu automatického PINu, s pravidly 30 minut / 24 hodin
+a informací o nepřipojených online platbách a zámcích. Tyto webové změny zatím
+nebyly nasazeny. Právní dokumenty se neměnily; před ostrým veřejným spuštěním je
+nutné sladit jejich požadavek platby a přístupu PINem s dočasným režimem.
+
+Petr schválil testovací rezervace TEST MaxGym na maxgym@maxgym.sk a jejich storno.
+Veřejný formulář je připraven na Pro 150 minut dne 26. 10. 2026 10:00–12:30.
+Zatím nebyl odeslán: čeká na výslovné potvrzení přijetí klientských podmínek
+SimplyBook a storno pravidla. Dokončení rezervace, skutečné blokování překryvů,
+souběh Pro/Solo, doručení potvrzení a storno ještě nejsou ověřeny úplným průchodem.
