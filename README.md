@@ -122,7 +122,7 @@ DMARC**. Mění se pouze kořen webu a `www` podle pokynů hostingu.
 
 HOTOVO: SK primární jazyk (slovenské URL slugy), MaxGym branding (textové logo),
 dvě fitka **MaxGym Pro** a **MaxGym Solo** (karty na úvodu, sekce ve vybavení a ceníku),
-adresa Klincová 37 / 821 08 Bratislava-Ružinov, kontakt maxgym@maxgym.sk,
+adresa Klincová 16637/37C / 821 08 Bratislava-Ružinov, kontakt maxgym@maxgym.sk,
 SimplyBook iframe na maxgymbratislava.simplybook.it, EN verze zrcadlí SK.
 Právní stránky = placeholder (brněnské texty záměrně nepřeneseny — jiná entita/právo).
 

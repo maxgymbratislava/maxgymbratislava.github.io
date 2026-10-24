@@ -1,6 +1,6 @@
 # MaxGym Bratislava web — stav a předání
 
-**Aktualizováno:** 5. 9. 2026
+**Aktualizováno:** 24. 10. 2026
 **Veřejná lock stránka:** https://maxgym.sk/
 **Pracovní náhled celého webu:** https://maxgym.sk/test/
 **GitHub Pages náhled repozitáře:** https://maxgymbratislava.github.io/
@@ -92,7 +92,7 @@ web → SimplyBook → Zapier → api.maxgym.sk → MaxGym backend → Nuki → 
 - Přejmenovat `Fitko 1` → `MaxGym Pro` a `Fitko 2` → `MaxGym Solo`, ale zachovat `event_id` 2/3.
 - Opravit veřejnou dostupnost: nyní se zobrazuje Po–Pá 09:00–18:00 a víkend zavřený, zatímco cílový provoz je 24/7.
 - Přepnout veřejné UI na slovenštinu a timezone na `Europe/Bratislava`.
-- Sjednotit kontakt a potvrdit adresu: web používá Klincová 37; SimplyBook veřejně ukazoval Klincovu 37C a český telefon.
+- Kontakt sjednocen 24. 10. 2026; Petr potvrdil adresu Klincová 16637/37C, 821 08 Bratislava-Ružinov.
 - Nastavit dvě nezávislé dostupnosti tak, aby šla Pro a Solo rezervovat ve stejný čas.
 - Potvrdit ceny, délku vstupu, kapacitu, storno a platby; teprve pak je propsat do SimplyBook, webu a právních dokumentů.
 
@@ -108,7 +108,7 @@ web → SimplyBook → Zapier → api.maxgym.sk → MaxGym backend → Nuki → 
 
 - Ceny, délka rezervace, balíčky, kapacita, příplatky a storno/refundace.
 - Způsob online platby a údaje slovenského provozovatele.
-- Přesná adresa 37 vs. 37C, slovenský telefon a nouzový kontakt.
+- Nouzový kontakt (adresa Klincová 16637/37C a slovenský telefon jsou již potvrzené).
 - Seznam vybavení Pro/Solo, potvrzení sprchy/toalety, hygieny, úklidu, kamer a uchování záznamů.
 - MHD, parkování a konkrétní trasa ke každým dveřím.
 - Logo, Instagram a fotografie/video skutečných bratislavských prostor.
@@ -172,7 +172,9 @@ V přihlášeném SimplyBook účtu byly skutečně uloženy tyto služby:
   Nebyla připojena nová brána ani zapnuto opakované účtování.
 - Po výslovném schválení Petra uložen a ověřen veřejný kontakt: MaxGym Bratislava,
   +421 948 681 068 a https://maxgym.sk/. Správné údaje potvrzeny i ve veřejném
-  formuláři po načtení. Adresa se neměnila.
+  formuláři po načtení. Petr následně potvrdil adresu Klincová 16637/37C;
+  adresa byla sjednocena v SimplyBook i ve všech 15 HTML stránkách webu včetně
+  slovenských právních stránek a obou jazykových verzí kontaktu.
 - Veřejný iframe ukazuje všechny čtyři správné délky a ceny, poskytovatele Pro,
   sobotní a večerní termíny. Veřejný formulář nabízí 150minutový vstup od 23:45.
 - Zapier účet MAXGYM SK: všechny tři dveřní Zapy jsou OFF. Ponechány OFF.
