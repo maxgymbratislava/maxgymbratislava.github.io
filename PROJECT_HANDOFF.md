@@ -170,18 +170,32 @@ V přihlášeném SimplyBook účtu byly skutečně uloženy tyto služby:
   Refundace ani vracení vstupů nebyly nově definovány.
 - Platební nastavení ukazuje jedinou metodu „Čekající (Zaplatit později)“.
   Nebyla připojena nová brána ani zapnuto opakované účtování.
-- Odeslána aktualizace veřejného kontaktu: MaxGym Bratislava,
-  +421 948 681 068 a https://maxgym.sk/. Adresa se neměnila.
+- Po výslovném schválení Petra uložen a ověřen veřejný kontakt: MaxGym Bratislava,
+  +421 948 681 068 a https://maxgym.sk/. Správné údaje potvrzeny i ve veřejném
+  formuláři po načtení. Adresa se neměnila.
 - Veřejný iframe ukazuje všechny čtyři správné délky a ceny, poskytovatele Pro,
   sobotní a večerní termíny. Veřejný formulář nabízí 150minutový vstup od 23:45.
 - Zapier účet MAXGYM SK: všechny tři dveřní Zapy jsou OFF. Ponechány OFF.
 - SimplyBook zůstává česky; základní výběr jazyků nenabízí slovenštinu.
 
-SK/EN texty rezervace, úvodu a užitečných informací jsou připraveny ve větvi
-`rezervace-bez-zamku`: bez slibu automatického PINu, s pravidly 30 minut / 24 hodin
-a informací o nepřipojených online platbách a zámcích. Tyto webové změny zatím
-nebyly nasazeny. Právní dokumenty se neměnily; před ostrým veřejným spuštěním je
+SK/EN texty rezervace, úvodu a užitečných informací byly po výslovném schválení
+Petra 24. 10. 2026 nahrány z větve `rezervace-bez-zamku` do `main` a nasazeny
+na https://maxgym.sk/test/: bez slibu automatického PINu, s pravidly 30 minut /
+24 hodin a informací o nepřipojených online platbách a zámcích. Nasazený commit
+`4378d2e` zachovává původní vložení a načítání iframe. Workflow Deploy to Cesky
+hosting č. 20 skončilo úspěšně:
+https://github.com/maxgymbratislava/maxgymbratislava.github.io/actions/runs/40091806623
+Všech šest upravených veřejných HTML stránek vrací HTTP 200 a odpovídá lokálním
+souborům. Na živé rezervační stránce ověřeno načtení SimplyBook i správný kontakt.
+Kořen domény stále zobrazuje oznámení o připravovaném otevření.
+Právní dokumenty se neměnily; před ostrým veřejným spuštěním je
 nutné sladit jejich požadavek platby a přístupu PINem s dočasným režimem.
+
+Při kontrole notifikací: kredit SMS je 0. Potvrzovací, změnové a storno SMS
+jsou vypnuté; připomínka klientovi má zapnutý přepínač 1 hodinu předem, ale bez
+kreditu nelze odeslání očekávat. Externí SMS brána není aktivovaná. Nebyl koupen
+kredit ani zapnuta placená funkce. Odběr novinek je samostatný marketingový souhlas
+a vyplnění telefonu samo o sobě SMS odesílání nezapíná.
 
 Petr výslovně schválil testovací rezervace TEST MaxGym na maxgym@maxgym.sk,
 veřejný telefon fitka, přijetí klientských podmínek SimplyBook a storno pravidla.
