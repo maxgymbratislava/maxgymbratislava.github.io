@@ -10,7 +10,9 @@
   <link rel="icon" href="/test/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/test/assets/css/style.css">
+  <link rel="stylesheet" href="/test/assets/css/style.css?v=20261026-booking">
+  <script src="https://simplybook.me/v2/widget/widget.js" defer></script>
+  <script src="/test/assets/js/booking.js?v=20261026" defer></script>
 </head>
 <body>
 
@@ -36,8 +38,8 @@
     <p style="margin-bottom:12px">Vyber si fitko (<strong>MaxGym Pro</strong> alebo <strong>MaxGym Solo</strong>), dĺžku vstupu 75 alebo 150 minút a voľný termín. Potvrdenie rezervácie dostaneš e-mailom.</p>
     <p style="margin-bottom:12px">Rezervuj si termín aspoň <strong>30 minút vopred</strong>. Rezerváciu môžeš zrušiť najneskôr <strong>24 hodín pred začiatkom</strong>.</p>
     <p class="note" style="margin-bottom:24px">V tejto fáze prijímame rezervácie <strong>bez online platby a automatického vstupného kódu</strong>. Potvrdenie rezervácie neslúži na odomknutie dverí. Pred návštevou nás kontaktuj na <a href="mailto:maxgym@maxgym.sk">maxgym@maxgym.sk</a> a dohodni si vstup.</p>
-    <iframe class="booking-frame" src="https://maxgymbratislava.simplybook.it/v2/" title="Rezervačný systém MaxGym" loading="lazy"></iframe>
-    <p class="price-note">Ak sa rezervačný formulár nenačíta, otvor ho priamo: <a href="https://maxgymbratislava.simplybook.it/" style="color:var(--red)">maxgymbratislava.simplybook.it</a></p>
+    <p class="price-note" style="margin:0 0 20px">Rezerváciu môžeš otvoriť aj <a href="https://maxgymbratislava.simplybook.it/v2/book/" target="_blank" rel="noopener" style="color:var(--red)">na samostatnej stránke</a>.</p>
+    <div id="maxgym-booking" class="booking-widget" data-title="Rezervačný systém MaxGym"></div>
   </div>
 </section>
 

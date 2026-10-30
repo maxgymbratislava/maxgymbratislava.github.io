@@ -46,8 +46,9 @@ scripts/optimize-images.ps1   opakovatelná tvorba webových kopií z originál�
   upravit všechny soubory, s AI to je jeden prompt).
 - **Barvy/fonty:** `test/assets/css/style.css`, blok `:root` nahoře
   (`--bg`, `--text`, `--red`, `--red-dark`).
-- **Rezervační systém:** iframe v `test/rezervacia/index.html` a
-  `test/en/rezervacia/index.html`.
+- **Rezervační systém:** oficiální SimplyBook widget v `test/rezervacia/index.html`
+  a `test/en/rezervacia/index.html`, inicializace v `test/assets/js/booking.js`.
+  Prosté vložení veřejné `/v2/` stránky nezapíná iframe správu relace SimplyBooku.
 
 ## Lokální náhled
 

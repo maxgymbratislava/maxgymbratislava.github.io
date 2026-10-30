@@ -1,6 +1,6 @@
 # MaxGym Bratislava web — stav a předání
 
-**Aktualizováno:** 24. 10. 2026
+**Aktualizováno:** 26. 10. 2026
 **Veřejná lock stránka:** https://maxgym.sk/
 **Pracovní náhled celého webu:** https://maxgym.sk/test/
 **GitHub Pages náhled repozitáře:** https://maxgymbratislava.github.io/
@@ -218,3 +218,37 @@ veřejný telefon fitka, přijetí klientských podmínek SimplyBook a storno pr
   platby i po stornu rezervace. Nebyly označeny jako zaplacené ani smazány.
   Žádná online platba neproběhla. Jde o účetní záznamy testu, nikoli aktivní
   rezervace nebo blokované termíny.
+
+## Oprava vložených rezervací — 26. 10. 2026, zatím lokálně
+
+Petr po odeslání údajů ve formuláři na `/test/rezervacia/` obdržel SimplyBook
+`#error/e403` a nedostal potvrzovací e-mail. Stejný postup na samostatné stránce
+SimplyBook podle jeho následného testu rezervaci úspěšně dokončil.
+
+Původní HTML vkládalo obyčejnou stránku `/v2/`. Porovnání veřejných zdrojů
+SimplyBook prokázalo, že tato adresa nemá aktivní `is_widget`, nepředává
+`_session_id` a nenačítá `widget_cookies.js`. Oficiální widget aktivuje
+iframe režim přes `widget-type=iframe`, předává adresu hostitele a zapíná
+správu relace. Přesný odmítnutý požadavek původní rezervace nebyl zachycen;
+obecná obrazovka 403 sama neurčuje, zda selhal zápis nebo následné načtení.
+
+Ve větvi `uprava/simplybook-widget-session` jsou SK/EN rezervace převedeny na
+oficiální `https://simplybook.me/v2/widget/widget.js`, inicializovaný společným
+`test/assets/js/booking.js`. Do `theme_settings` je přenesen veřejný vzhled
+účtu Mocco (samotné `theme: default` používá odlišné zelené výchozí nastavení).
+Při budoucí změně vzhledu účtu aktualizovat také tyto parametry widgetu.
+Widget spravuje vlastní výšku. Přímý odkaz na
+rezervace zůstává dostupný nad formulářem i bez JavaScriptu. Ceny, služby,
+podmínky a nastavení účtu se nemění.
+
+Zdroj postupu: https://help.simplybook.me/wiki/Widgets_for_your_own_website
+
+Lokálně ověřeno načtení widgetu v SK/EN, jeho automatická výška a přechod
+služba → termín → kontaktní údaje. Kontrola 15 HTML stránek a 254 interních
+odkazů/assetů nenašla chybějící soubory; syntaxe JavaScriptu a kontrola diffu
+se zohledněním stávajících CRLF konců řádků prošly. Závěrečné odeslání
+rezervace přes opravený widget nebylo provedeno.
+
+Oprava zatím není commitnutá ani nasazená. Po schválení nasazení ověřit celý
+průchod včetně odeslání údajů na skutečné doméně. Úspěšný přímý test Petra
+není testem opraveného widgetu.
