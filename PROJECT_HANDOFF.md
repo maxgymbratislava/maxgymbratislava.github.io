@@ -249,6 +249,32 @@ odkazů/assetů nenašla chybějící soubory; syntaxe JavaScriptu a kontrola di
 se zohledněním stávajících CRLF konců řádků prošly. Závěrečné odeslání
 rezervace přes opravený widget nebylo provedeno.
 
-Oprava zatím není commitnutá ani nasazená. Po schválení nasazení ověřit celý
-průchod včetně odeslání údajů na skutečné doméně. Úspěšný přímý test Petra
-není testem opraveného widgetu.
+K 26. 10. oprava nebyla commitnutá ani nasazená. Úspěšný přímý test Petra
+není testem opraveného widgetu. Aktualizace nasazení je uvedena níže.
+
+## Nasazení opravy vložených rezervací — 30. 10. 2026
+
+Petr určil odstranění chyby na webu jako prioritu před úpravami textů a vzhledu.
+Při sledování jeho průchodu starý iframe po odeslání kontaktních údajů znovu
+skončil na `#error/e403`; přímá stránka SimplyBook následně fungovala včetně
+platby. Živý DOM stále obsahoval prostý iframe `/v2/` a nenačítal `booking.js`.
+
+- Oprava oficiálním widgetem byla commitnuta jako `09967a9` a nahrána do `main`.
+- Workflow Deploy to Cesky hosting skončilo úspěšně:
+  https://github.com/maxgymbratislava/maxgymbratislava.github.io/actions/runs/41079186273
+- Na živých SK i EN rezervačních stránkách ověřen nový kontejner, oba skripty
+  a vygenerovaná URL iframe s `widget-type=iframe` a správným `host_url`.
+  Původně otevřená stránka potřebovala obnovení, aby načetla novou verzi.
+- Na SK stránce ověřen průchod služba → dostupné termíny → kontaktní údaje,
+  automatická výška iframe a prázdný protokol chyb JavaScriptu.
+- Kontrola 16 HTML stránek a 254 místních odkazů/assetů, syntaxe obou JS souborů
+  i kontrola diffu prošly. Lokální náhled nebyl z vestavěného prohlížeče dostupný;
+  UI ověření proběhlo na skutečné doméně po nasazení.
+- Závěrečné odeslání opraveného formuláře a návrat z platby ještě nejsou
+  ověřené. Uživateli byl ponechán otevřený formulář ke kontrole přechodu
+  na výběr platby. Samotné zobrazení kontaktního formuláře neprokazuje
+  odstranění chyby, která nastávala až po jeho odeslání.
+
+Změna nezasahovala do nastavení SimplyBook/SBPay, cen, dveřních automatizací,
+e-mailů ani textů webu. Zastaralé sdělení o nepřipojených online platbách zůstává
+samostatným následným úkolem podle aktuální priority uživatele.
