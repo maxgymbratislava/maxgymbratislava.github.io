@@ -9,7 +9,7 @@ API tokeny, SSH klíče ani jiné tajné údaje.
 - GitHub repozitář: <https://github.com/maxgymbratislava/maxgymbratislava.github.io>
 - hlavní větev: `main`
 - veřejná stránka: <https://maxgym.sk/>
-- pracovní verze celého webu: <https://maxgym.sk/test/>
+- anglická verze: <https://maxgym.sk/en/>
 - automatické nasazení: GitHub Actions → `Deploy to Cesky hosting`
 
 Web je čisté HTML, CSS a JavaScript bez frameworku a bez build kroku. Podrobnosti jsou
@@ -62,13 +62,11 @@ vynutit tvrdým obnovením `Ctrl+F5` nebo dočasným query parametrem, napříkl
 
 ## 4. Aktuální uspořádání a důležitá pravidla
 
-- Kořen `index.html` je dočasná stránka s fotografií a textem
-  „Už čoskoro nový MAXGYM BRATISLAVA“.
-- Kompletní slovenský web je v adresáři `test/`, anglická verze v `test/en/`.
-- Všechny pracovní HTML stránky mají `noindex, nofollow`; `robots.txt` blokuje `/test/`.
-- Pracovní web není chráněný heslem. Kdo zná adresu `/test/`, může jej otevřít.
-- Cesty pracovního webu začínají `/test/`, včetně obrázků, CSS a JavaScriptu.
-- Optimalizované obrázky používané webem jsou v `test/assets/img/`.
+- Kompletní slovenský web je v kořeni repozitáře, anglická verze v `en/`.
+- Veřejné stránky jsou indexovatelné a uvedené v `sitemap.xml`.
+- Staré adresy pod `/test/` se trvale přesměrovávají na ostré adresy.
+- Cesty webu začínají `/`, včetně obrázků, CSS a JavaScriptu.
+- Optimalizované obrázky používané webem jsou v `assets/img/`.
 - Plné originální fotografie nejsou ve veřejném GitHubu. Lokální složka
   `source-images/` je ignorovaná Gitem a musí se předat nebo zálohovat soukromě.
 - Nové webové kopie lze vytvořit skriptem `scripts/optimize-images.ps1`.
@@ -92,17 +90,16 @@ https://github.com/maxgymbratislava/maxgymbratislava.github.io
 
 Nejprve se k repozitáři připoj nebo jej naklonuj, ověř větev a spusť `git status`.
 Potom si celý přečti soubory README.md, PROJECT_HANDOFF.md a
-PREDANI_MAJITELI_AGENT.md. Než začneš měnit soubory, stručně mi potvrď aktuální stav,
-co je veřejně na maxgym.sk a co je pod /test/. Pokud k repozitáři nemáš zápis, nic
+PREDANI_MAJITELI_AGENT.md. Než začneš měnit soubory, stručně mi potvrď aktuální stav
+veřejného webu na maxgym.sk. Pokud k repozitáři nemáš zápis, nic
 neobcházej a přesně mi napiš, jaké oprávnění chybí.
 
 Pravidla práce:
 - Komunikuj se mnou srozumitelně česky nebo slovensky.
 - Pracuj v nové větvi `uprava/kratky-popis`; do `main` nic neposílej bez mého
   výslovného pokynu „nasadit“.
-- Zachovej dočasnou veřejnou stránku v kořeni a celý web pod /test/, dokud výslovně
-  neřeknu, že se web spouští veřejně.
-- Slovenština je hlavní jazyk, angličtina je v /test/en/. Při obsahové změně zvaž
+- Web je v ostrém provozu v kořeni domény; další změny vždy nejprve ověř v pracovní větvi.
+- Slovenština je hlavní jazyk, angličtina je v /en/. Při obsahové změně zvaž
   obě jazykové verze a zachovej funkční interní odkazy.
 - Nevymýšlej ceny, storno, platební pravidla, vybavení, kontaktní údaje ani právní
   formulace. Chybějící rozhodnutí mi polož jako konkrétní otázku.

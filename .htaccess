@@ -5,3 +5,8 @@
     Header always set Expires "0"
   </Files>
 </IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^test(?:/(.*))?$ /$1 [R=301,L,NE]
+</IfModule>

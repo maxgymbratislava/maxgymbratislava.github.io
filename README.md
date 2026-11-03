@@ -9,45 +9,43 @@
 Vytvořeno 20. 8. 2026 věrnou rekonstrukcí webu www.sologym.pro (Wix) do editovatelného kódu.
 Cíl: základ pro web **MaxGym Bratislava** (maxgym.sk), editovatelný majitelem přes GitHub + AI.
 
-## Aktuální režim před spuštěním
+## Aktuální režim ostrého provozu
 
-- `https://maxgym.sk/` zobrazuje přes fotografii jednoduché oznámení
-  **„Už čoskoro nový MAXGYM BRATISLAVA“**.
-- Celý pracovní web je veřejně dostupný na `https://maxgym.sk/test/`.
-- `/test/` není chráněný heslem. Není na něj odkaz z úvodní stránky, je zakázaný v
-  `robots.txt` a všechny jeho HTML stránky mají `noindex, nofollow`.
+- Kompletní web je od 3. 11. 2026 veřejně dostupný na `https://maxgym.sk/`.
+- Slovenština je v kořeni, anglická verze pod `https://maxgym.sk/en/`.
+- Staré adresy pod `/test/` se trvale přesměrovávají na odpovídající ostré adresy.
+- Veřejné stránky jsou indexovatelné a uvedené v `sitemap.xml`.
 
 ## Struktura
 
 ```
-index.html                    dočasná obrazová stránka „Už čoskoro…"
-robots.txt, sitemap.xml       indexování pouze úvodní stránky
-test/index.html               pracovní úvod (SK)
-test/cennik/                  ceník
-test/rezervacia/              rezervace (SimplyBook iframe)
-test/galeria/                 fotogalerie (lightbox)
-test/vybavenie/               vybavení
-test/uzitocne-info/           instrukce pro návštěvníky
-test/obchodne-podmienky/      právní dokumenty
-test/reklamacny-poriadok/
-test/ochrana-osobnych-udajov/
-test/en/                      anglická verze (stejná struktura, bez právních stránek)
-test/assets/css/style.css     veškeré styly (barvy = CSS proměnné v :root)
-test/assets/js/main.js        mobilní menu + lightbox
-test/assets/img/              optimalizované obrázky používané webem
+index.html                    veřejný úvod (SK)
+robots.txt, sitemap.xml       indexování veřejných SK/EN stránek
+cennik/                       ceník
+rezervacia/                   rezervace (SimplyBook widget)
+galeria/                      fotogalerie (lightbox)
+vybavenie/                    vybavení
+uzitocne-info/                instrukce pro návštěvníky
+obchodne-podmienky/           právní dokumenty
+reklamacny-poriadok/
+ochrana-osobnych-udajov/
+en/                           anglická verze (stejná struktura, bez právních stránek)
+assets/css/style.css          veškeré styly (barvy = CSS proměnné v :root)
+assets/js/main.js             mobilní menu + lightbox
+assets/img/                   optimalizované obrázky používané webem
 source-images/                lokální nepoškozené originály (ignorované Gitem)
 scripts/optimize-images.ps1   opakovatelná tvorba webových kopií z originálů
 ```
 
 ## Jak upravovat
 
-- **Texty:** přímo v HTML souborech pod `test/`. Každá stránka je samostatná
+- **Texty:** přímo v HTML souborech v kořeni a jeho podadresářích. Každá stránka je samostatná
   (hlavička/patička jsou zkopírované v každém souboru — při změně menu je nutné
   upravit všechny soubory, s AI to je jeden prompt).
-- **Barvy/fonty:** `test/assets/css/style.css`, blok `:root` nahoře
+- **Barvy/fonty:** `assets/css/style.css`, blok `:root` nahoře
   (`--bg`, `--text`, `--red`, `--red-dark`).
-- **Rezervační systém:** oficiální SimplyBook widget v `test/rezervacia/index.html`
-  a `test/en/rezervacia/index.html`, inicializace v `test/assets/js/booking.js`.
+- **Rezervační systém:** oficiální SimplyBook widget v `rezervacia/index.html`
+  a `en/rezervacia/index.html`, inicializace v `assets/js/booking.js`.
   Prosté vložení veřejné `/v2/` stránky nezapíná iframe správu relace SimplyBooku.
 
 ## Lokální náhled
@@ -57,16 +55,15 @@ Spusť server v kořeni repozitáře:
 python3 -m http.server 8000
 ```
 
-Lock stránka bude na `http://localhost:8000/`, celý web na
-`http://localhost:8000/test/`. Absolutní cesty `/test/assets/...` vyžadují server,
-ne otevření přes `file://`.
+Celý web bude na `http://localhost:8000/`. Absolutní cesty `/assets/...` vyžadují
+server, ne otevření přes `file://`.
 
 ## Obrázky
 
 Originální JPEGy jsou uložené lokálně v `source-images/`. Složka je v `.gitignore`,
 protože veřejný GitHub repozitář ani webhosting nejsou vhodné místo pro plné zdrojové
 fotografie. **Originály je nutné samostatně zálohovat do soukromého úložiště.** Web
-používá pouze nově vygenerované soubory v `test/assets/img/`. Jejich vytvoření na
+používá pouze nově vygenerované soubory v `assets/img/`. Jejich vytvoření na
 Windows bez instalace dalšího programu:
 
 ```powershell
@@ -98,15 +95,15 @@ serveru soubory, které už nejsou v repozitáři. Systémovou složku `.well-kn
 výslovně zachovává kvůli HTTPS certifikátu; `source-images/` a `scripts/` se na
 veřejný server nenahrávají.
 
-### Zpřístupnění hotového webu v kořeni
+### Zpřístupnění hotového webu v kořeni — provedeno 3. 11. 2026
 
-Až bude web připravený ke spuštění, je potřeba v jednom commitu:
+Ostré spuštění bylo provedeno v jednom commitu:
 
-1. přesunout obsah `test/` zpět do kořene repozitáře;
-2. ve všech HTML změnit cesty `/test/...` zpět na `/...`;
-3. odstranit z veřejných stránek `noindex, nofollow`;
-4. upravit `robots.txt` a `sitemap.xml` pro ostré SK/EN stránky;
-5. lokálně ověřit odkazy a po pushi zkontrolovat produkční workflow.
+1. obsah `test/` byl přesunut do kořene repozitáře;
+2. cesty `/test/...` byly změněny na `/...`;
+3. z veřejných stránek bylo odstraněno `noindex, nofollow`;
+4. `robots.txt` a `sitemap.xml` byly upraveny pro ostré SK/EN stránky;
+5. staré adresy `/test/` byly přesměrovány na odpovídající ostré adresy.
 
 Při přepínání domény **neměnit nameservery ani záznamy `api.maxgym.sk`, MX, DKIM a
 DMARC**. Mění se pouze kořen webu a `www` podle pokynů hostingu.
