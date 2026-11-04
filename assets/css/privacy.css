@@ -1,0 +1,14 @@
+.mg-consent[hidden], .mg-consent [hidden] { display: none !important; }
+.mg-consent { position: fixed; z-index: 10000; bottom: 12px; left: 12px; right: 12px; max-width: 780px; margin: auto; padding: 22px; background: #171717; color: #fff; border: 1px solid #777; border-radius: 12px; box-shadow: 0 8px 40px #0008; font: 15px/1.5 Arial, sans-serif; max-height: 85vh; overflow: auto; }
+.mg-consent h2 { margin: 0 0 10px; font-size: 22px; color: #fff; }
+.mg-consent p { margin: 0 0 12px; color: #fff; }
+.mg-consent a { color: #fff; text-decoration: underline; }
+.mg-consent-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.mg-consent-actions button { flex: 1 1 180px; min-height: 44px; padding: 11px 14px; border: 1px solid #fff; border-radius: 6px; background: #fff; color: #111; font: bold 14px/1.4 Arial, sans-serif; cursor: pointer; }
+.mg-consent-choices { margin-top: 16px; }
+.mg-consent-choices label { display: flex; gap: 10px; align-items: center; min-height: 44px; color: #fff; }
+.mg-consent-choices input { width: 20px; height: 20px; accent-color: #ed1c24; }
+.mg-consent-choices p { margin: 10px 0 0; font-size: 13px; }
+.mg-consent-reopen { position: fixed; bottom: 8px; left: 8px; z-index: 9999; min-height: 36px; padding: 7px 12px; border: 1px solid #777; border-radius: 5px; color: #fff; background: #171717; font: 12px/1.4 Arial, sans-serif; cursor: pointer; }
+.mg-consent button:focus-visible, .mg-consent a:focus-visible, .mg-consent input:focus-visible, .mg-consent-reopen:focus-visible { outline: 3px solid #ff7575; outline-offset: 3px; }
+@media (max-width: 480px) { .mg-consent { padding: 16px; } .mg-consent-actions { gap: 8px; } .mg-consent-actions button { flex-basis: 100%; } }
