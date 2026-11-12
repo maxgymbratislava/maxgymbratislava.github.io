@@ -32,7 +32,8 @@ function boot(saved) {
   vm.runInNewContext(source, context);
   const click = label => { const b = nodes.find(n => n.tagName === 'button' && n.textContent === label); assert(b); b.click(); };
   const complete = (extra = {}) => listeners.message({ source: frame.contentWindow,
-    origin: 'https://maxgymbratislava.simplybook.it', data: { event: 'bookingDone', email: 'private@example.com' }, ...extra });
+    origin: 'https://maxgymbratislava.simplybook.it',
+    data: { event: 'maxgymPaymentAccepted', reference: 'private-payment-id', email: 'private@example.com' }, ...extra });
   return { window, document, nodes, click, complete, cookieWrites, storage, frame, reloads: () => reloads };
 }
 const saved = (analytics, marketing, time = Date.now()) => ({ version: 1, analytics, marketing, time });
@@ -61,14 +62,25 @@ const metaCount = b.window.fbq.queue.length;
 b.complete({ origin: 'https://evil.example' });
 b.complete({ source: {} });
 b.complete({ data: { event: 'stepChanged' } });
+b.complete({ data: { event: 'bookingDone' } });
+b.complete({ data: { event: 'purchase', payment_method: 'pay_later' } });
 assert.equal(b.window.dataLayer.length, gaCount, 'Reject unrelated/spoofed completions');
 b.complete(); b.complete();
 assert.equal(b.window.dataLayer.length, gaCount + 1, 'Count duplicate completion once');
 assert.equal(b.window.fbq.queue.length, metaCount + 1);
-assert.equal(b.window.dataLayer.at(-1)[1], 'booking_complete');
-assert.equal(b.window.fbq.queue.at(-1)[1], 'Schedule');
+assert.equal(b.window.dataLayer.at(-1)[1], 'booking_paid');
+assert.equal(b.window.dataLayer.at(-1)[2].page_location, 'https://maxgym.sk/rezervacia/?utm_source=instagram');
+assert.equal(b.window.fbq.queue.at(-1)[0], 'trackCustom');
+assert.equal(b.window.fbq.queue.at(-1)[1], 'PaidBooking');
 assert(!JSON.stringify(b.window.dataLayer).includes('private@example.com'));
 assert(!JSON.stringify(b.window.fbq.queue).includes('private@example.com'));
+assert(!JSON.stringify(b.window.dataLayer).includes('private-payment-id'));
+assert(!JSON.stringify(b.window.fbq.queue).includes('private-payment-id'));
+b.complete({ data: { event: 'maxgymPaymentAccepted', reference: 'other-payment' } });
+assert.equal(b.window.dataLayer.length, gaCount + 2, 'Distinct provider payments count separately');
+b.complete({ data: { event: 'maxgymPaymentAccepted' } });
+b.complete({ data: { event: 'maxgymPaymentAccepted' } });
+assert.equal(b.window.dataLayer.length, gaCount + 3, 'Fallback is once per loaded checkout');
 b.click('Nastavenie cookies'); b.click('Odmietnuť nepovinné');
 assert.equal(b.reloads(), 1, 'Revocation unloads active libraries');
 assert.equal(JSON.parse(b.storage.get('maxgym-consent-v1')).analytics, false);
@@ -78,4 +90,29 @@ b = boot({ version: 1, time: Date.now(), analytics: 'yes', marketing: true });
 assert.equal(b.document.head.children.length, 0, 'Invalid consent fails closed');
 b = boot(); b.complete(); b.click('Prijať všetko'); b.complete();
 assert.equal(b.window.dataLayer.length, 3, 'Never replay a pre-consent completion');
-console.log('PASS: consent gating, separate categories, persistence/expiry, URL redaction, source/origin checks, completion deduplication, withdrawal and no replay.');
+b = boot(saved(true, false)); b.complete();
+assert.equal(b.window.dataLayer.at(-1)[1], 'booking_paid');
+assert.equal(b.window.fbq, undefined);
+b = boot(saved(false, true)); b.complete();
+assert.equal(b.window.fbq.queue.at(-1)[1], 'PaidBooking');
+assert.equal(b.window.gtag, undefined);
+
+const relaySource = readFileSync('scripts/simplybook-paid-gtm.html', 'utf8').replace(/<\/?script>/g, '');
+function relay(dataLayer, origin = 'https://maxgymbratislava.simplybook.it', embedded = true) {
+  const calls = [];
+  const window = { dataLayer };
+  window.parent = embedded ? {
+    postMessage(message, target) { calls.push([JSON.parse(JSON.stringify(message)), target]); }
+  } : window;
+  vm.runInNewContext(relaySource, { window, location: { origin } });
+  return calls;
+}
+assert.deepEqual(relay([{ event: 'purchase', payment_method: 'pay_later' }]), []);
+assert.deepEqual(relay([{ event: 'bookingDone' }]), []);
+assert.deepEqual(relay([{ event: 'paymentAccepted', transaction_id: 't-20', email: 'private@example.com' }]),
+  [[{ event: 'maxgymPaymentAccepted', reference: 't-20' }, 'https://maxgym.sk']]);
+assert.deepEqual(relay([{ event: 'paymentAccepted', transaction_id: 'private@example.com' }]),
+  [[{ event: 'maxgymPaymentAccepted' }, 'https://maxgym.sk']]);
+assert.deepEqual(relay([{ event: 'paymentAccepted' }], 'https://other.example'), []);
+assert.deepEqual(relay([{ event: 'paymentAccepted' }], undefined, false), []);
+console.log('PASS: separate consents, source/origin, paid-event relay, URL redaction, payment deduplication and no replay.');

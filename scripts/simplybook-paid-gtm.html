@@ -1,0 +1,24 @@
+<script>
+(function () {
+  'use strict';
+
+  if (window === window.parent || location.origin !== 'https://maxgymbratislava.simplybook.it') return;
+
+  var layer = window.dataLayer || [];
+  var payment;
+  for (var index = layer.length - 1; index >= 0; index--) {
+    if (layer[index] && layer[index].event === 'paymentAccepted') {
+      payment = layer[index];
+      break;
+    }
+  }
+  if (!payment) return;
+
+  var message = { event: 'maxgymPaymentAccepted' };
+  var reference = payment.transaction_id || (payment.ecommerce && payment.ecommerce.transaction_id);
+  if (typeof reference === 'number' && isFinite(reference)) reference = String(reference);
+  if (typeof reference === 'string' && /^[a-z0-9_-]{1,80}$/i.test(reference)) message.reference = reference;
+
+  window.parent.postMessage(message, 'https://maxgym.sk');
+})();
+</script>
