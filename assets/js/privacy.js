@@ -31,7 +31,8 @@
 
   let gaStarted = false;
   let metaStarted = false;
-  let bookingCounted = false;
+  let paymentWithoutReferenceCounted = false;
+  const countedPayments = new Set();
   const cleanLocation = () => {
     const url = new URL(location.href);
     const clean = new URL(url.origin + url.pathname);
@@ -81,21 +82,27 @@
     }
   };
 
-  // Trust only this site's actual booking iframe and its configured origin.
-  // SimplyBook documents bookingDone as the completion signal, not a page visit.
+  // The SimplyBook GTM tag relays only its successful online payment event.
   window.addEventListener('message', event => {
     const frame = document.querySelector('#maxgym-booking iframe');
     if (!frame || event.source !== frame.contentWindow ||
         event.origin !== 'https://maxgymbratislava.simplybook.it' ||
-        !event.data || typeof event.data !== 'object' || event.data.event !== 'bookingDone' ||
-        bookingCounted) return;
-    // No booking IDs, customer data, amounts or full message payloads are forwarded.
-    // Do not replay completions that happened before consent.
-    bookingCounted = true;
-    if (consent.analytics && gaStarted) window.gtag('event', 'booking_complete', {
+        !event.data || event.data.event !== 'maxgymPaymentAccepted') return;
+
+    // The optional payment reference is used here only for deduplication.
+    const reference = event.data.reference;
+    if (typeof reference === 'string' && /^[a-z0-9_-]{1,80}$/i.test(reference)) {
+      if (countedPayments.has(reference)) return;
+      countedPayments.add(reference);
+    } else {
+      if (paymentWithoutReferenceCounted) return;
+      paymentWithoutReferenceCounted = true;
+    }
+
+    if (consent.analytics && gaStarted) window.gtag('event', 'booking_paid', {
       booking_provider: 'simplybook', page_location: cleanLocation()
     });
-    if (consent.marketing && metaStarted) window.fbq('track', 'Schedule');
+    if (consent.marketing && metaStarted) window.fbq('trackCustom', 'PaidBooking');
   });
 
   const clearMeasurementCookies = () => {
