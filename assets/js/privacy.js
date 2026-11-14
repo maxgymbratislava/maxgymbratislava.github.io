@@ -31,7 +31,6 @@
 
   let gaStarted = false;
   let metaStarted = false;
-  let paymentWithoutReferenceCounted = false;
   const countedPayments = new Set();
   const cleanLocation = () => {
     const url = new URL(location.href);
@@ -82,22 +81,29 @@
     }
   };
 
-  // The SimplyBook GTM tag relays only its successful online payment event.
+  // SimplyBook's paid confirmation and the GTM relay carry the same invoice ID.
   window.addEventListener('message', event => {
     const frame = document.querySelector('#maxgym-booking iframe');
     if (!frame || event.source !== frame.contentWindow ||
-        event.origin !== 'https://maxgymbratislava.simplybook.it' ||
-        !event.data || event.data.event !== 'maxgymPaymentAccepted') return;
+        event.origin !== 'https://maxgymbratislava.simplybook.it' || !event.data) return;
 
-    // The optional payment reference is used here only for deduplication.
-    const reference = event.data.reference;
-    if (typeof reference === 'string' && /^[a-z0-9_-]{1,80}$/i.test(reference)) {
-      if (countedPayments.has(reference)) return;
-      countedPayments.add(reference);
-    } else {
-      if (paymentWithoutReferenceCounted) return;
-      paymentWithoutReferenceCounted = true;
-    }
+    const message = event.data;
+    let reference, processor;
+    if (message.event === 'bookingDone') {
+      reference = message.id;
+      processor = message.payment_processor;
+    } else if (message.event === 'maxgymPaymentAccepted') {
+      reference = message.reference;
+      processor = message.processor;
+    } else return;
+
+    // A generic bookingDone carries neither field. Pay Later uses the delay processor.
+    if (typeof processor !== 'string' || !/^[a-z0-9_-]{1,60}$/i.test(processor) ||
+        /^(delay|pay_later|paylater|cash|manual|free|onsite|offline)$/i.test(processor)) return;
+    if (Number.isSafeInteger(reference) && reference > 0) reference = String(reference);
+    if (typeof reference !== 'string' || !/^[a-z0-9_-]{1,80}$/i.test(reference) ||
+        countedPayments.has(reference)) return;
+    countedPayments.add(reference);
 
     if (consent.analytics && gaStarted) window.gtag('event', 'booking_paid', {
       booking_provider: 'simplybook', page_location: cleanLocation()
