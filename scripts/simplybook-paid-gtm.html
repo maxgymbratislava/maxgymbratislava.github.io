@@ -14,11 +14,13 @@
   }
   if (!payment) return;
 
-  var message = { event: 'maxgymPaymentAccepted' };
-  var reference = payment.transaction_id || (payment.ecommerce && payment.ecommerce.transaction_id);
-  if (typeof reference === 'number' && isFinite(reference)) reference = String(reference);
-  if (typeof reference === 'string' && /^[a-z0-9_-]{1,80}$/i.test(reference)) message.reference = reference;
+  var reference = payment.id;
+  if (Number.isSafeInteger(reference) && reference > 0) reference = String(reference);
+  if (typeof reference !== 'string' || !/^[a-z0-9_-]{1,80}$/i.test(reference)) return;
+  var processor = payment.payment_processor;
+  if (typeof processor !== 'string' || !/^[a-z0-9_-]{1,60}$/i.test(processor) ||
+      /^(delay|pay_later|paylater|cash|manual|free|onsite|offline)$/i.test(processor)) return;
 
-  window.parent.postMessage(message, 'https://maxgym.sk');
+  window.parent.postMessage({ event: 'maxgymPaymentAccepted', reference: reference, processor: processor }, 'https://maxgym.sk');
 })();
 </script>
