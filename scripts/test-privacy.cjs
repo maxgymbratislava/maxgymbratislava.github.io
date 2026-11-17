@@ -100,7 +100,7 @@ b = boot(saved(false, true)); b.complete();
 assert.equal(b.window.fbq.queue.at(-1)[1], 'PaidBooking');
 assert.equal(b.window.gtag, undefined);
 
-const relaySource = readFileSync('scripts/simplybook-paid-gtm.html', 'utf8').replace(/<\/?script>/g, '');
+const relaySource = readFileSync(process.argv[2] || 'scripts/simplybook-paid-gtm.html', 'utf8').replace(/<\/?script\b[^>]*>/g, '');
 function relay(dataLayer, origin = 'https://maxgymbratislava.simplybook.it', embedded = true) {
   const calls = [];
   const window = { dataLayer, addEventListener() {}, removeEventListener() {} };
@@ -129,13 +129,13 @@ assert.deepEqual(relay([accepted], undefined, false), []);
 // Test the real GTM script without making any network requests or GA4 events.
 function standalone(cookie, payments = [accepted], session = new Map()) {
   const scripts = [];
-  const document = { cookie, referrer: 'https://maxgym.sk/rezervacia/?private=secret',
+  const document = { cookie, referrer: 'https://maxgym.sk/checkout/private-token?private=secret',
     head: { appendChild(script) { scripts.push(script); } },
     createElement() { return {}; }, getElementById(id) { return scripts.find(s => s.id === id); } };
   const window = { dataLayer: [], parent: null }; window.parent = window;
   const context = { window, document, URL, Date,
     location: { origin: 'https://maxgymbratislava.simplybook.it',
-      href: 'https://maxgymbratislava.simplybook.it/v2/?utm_source=facebook&utm_medium=paid_social&utm_campaign=maxgym_pro_sparing_03&email=private@example.com#invoice/private-token' },
+      href: 'https://maxgymbratislava.simplybook.it/v2/invoice/private-token?utm_source=facebook&utm_medium=paid_social&utm_campaign=maxgym_pro_sparing_03&email=private@example.com#invoice/private-token' },
     sessionStorage: { getItem: key => session.get(key), setItem: (key, value) => session.set(key, value) } };
   for (const payment of payments) {
     window.dataLayer.push(payment);
@@ -156,6 +156,8 @@ assert.equal(direct.events[0][2].send_to, 'G-CLP2PW76E6');
 assert.equal(direct.events[0][2].page_location,
   'https://maxgymbratislava.simplybook.it/v2/?utm_source=facebook&utm_medium=paid_social&utm_campaign=maxgym_pro_sparing_03');
 assert.equal(direct.configs[0][2].send_page_view, false);
+assert.equal(direct.configs[0][2].page_referrer, 'https://maxgym.sk/');
+assert(!JSON.stringify(direct.configs).includes('private'));
 assert.equal(direct.scripts.length, 1);
 assert(!JSON.stringify(direct.events).includes('private'));
 assert.equal(standalone('cookies_accepted=yes', [accepted], direct.session).events.length, 0, 'Reload does not duplicate payment');
