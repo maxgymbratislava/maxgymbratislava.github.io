@@ -32,6 +32,61 @@
   let gaStarted = false;
   let metaStarted = false;
   const countedPayments = new Set();
+  const countedPurchases = new Set();
+  const SOURCE_KEY = 'maxgym-source-v1';
+  const SOURCE_AGE = 30 * 24 * 60 * 60 * 1000;
+  let sourceContext = null;
+  let gaClient, gaSession;
+  const cleanTag = value => typeof value === 'string' && /^[a-z0-9 _.,|:/-]{1,150}$/i.test(value) ? value : '';
+  const readSource = () => {
+    if (!consent.analytics) return null;
+    const params = new URL(location.href).searchParams;
+    const campaign = cleanTag(params.get('utm_campaign'));
+    if (campaign) {
+      sourceContext = { campaign, source: cleanTag(params.get('utm_source')),
+        medium: cleanTag(params.get('utm_medium')), content: cleanTag(params.get('utm_content')),
+        time: Date.now(), basis: 'tagged_click' };
+      try { localStorage.setItem(SOURCE_KEY, JSON.stringify(sourceContext)); } catch (_) {}
+    } else {
+      try {
+        const previous = JSON.parse(localStorage.getItem(SOURCE_KEY));
+        if (previous && cleanTag(previous.campaign) && previous.basis === 'tagged_click' &&
+            Number.isFinite(previous.time) && Date.now() - previous.time >= 0 &&
+            Date.now() - previous.time < SOURCE_AGE) sourceContext = {
+          campaign: cleanTag(previous.campaign), source: cleanTag(previous.source),
+          medium: cleanTag(previous.medium), content: cleanTag(previous.content),
+          time: previous.time, basis: 'tagged_click'
+        };
+        else { sourceContext = null; localStorage.removeItem(SOURCE_KEY); }
+      } catch (_) { sourceContext = null; }
+    }
+    return sourceContext;
+  };
+  const attribution = () => {
+    if (!sourceContext || Date.now() - sourceContext.time >= SOURCE_AGE) return {
+      mg_attribution: 'unknown', mg_campaign: 'unknown', mg_content: 'unknown'
+    };
+    return { mg_attribution: 'tagged_click_30d', mg_campaign: sourceContext.campaign,
+      mg_content: sourceContext.content || 'unknown', mg_source: sourceContext.source || 'unknown',
+      mg_medium: sourceContext.medium || 'unknown' };
+  };
+  const sendContext = () => {
+    if (!consent.analytics) return;
+    const frame = document.querySelector('#maxgym-booking iframe');
+    if (frame) frame.contentWindow.postMessage({ event: 'maxgymMeasurementContext',
+      analytics: true, context: sourceContext, client: gaClient, session: gaSession,
+      issued: Date.now() }, 'https://maxgymbratislava.simplybook.it');
+    if (sourceContext) document.querySelectorAll('a[href]').forEach(link => {
+      try {
+        const url = new URL(link.href);
+        if (url.origin !== 'https://maxgymbratislava.simplybook.it') return;
+        for (const key of ['source', 'medium', 'campaign', 'content']) {
+          if (sourceContext[key]) url.searchParams.set('utm_' + key, sourceContext[key]);
+        }
+        link.href = url.href;
+      } catch (_) {}
+    });
+  };
   const cleanLocation = () => {
     const url = new URL(location.href);
     const clean = new URL(url.origin + url.pathname);
@@ -49,6 +104,7 @@
   };
   const apply = () => {
     if (consent.analytics && !gaStarted) {
+      readSource();
       gaStarted = true;
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
@@ -63,6 +119,14 @@
         allow_google_signals: false, allow_ad_personalization_signals: false
       });
       script('https://www.googletagmanager.com/gtag/js?id=' + GA, 'maxgym-ga');
+      window.gtag('get', GA, 'client_id', value => {
+        if (typeof value === 'string' && /^\d+\.\d+$/.test(value)) gaClient = value;
+        sendContext();
+      });
+      window.gtag('get', GA, 'session_id', value => {
+        if (/^\d{1,16}$/.test(String(value))) gaSession = String(value);
+        sendContext();
+      });
     }
     if (consent.marketing && !metaStarted) {
       metaStarted = true;
@@ -89,6 +153,7 @@
         event.origin !== 'https://maxgymbratislava.simplybook.it' || !event.data) return;
 
     const message = event.data;
+    if (message.event === 'maxgymMeasurementReady') { sendContext(); return; }
     let reference, processor;
     if (message.event === 'bookingDone') {
       reference = message.id;
@@ -109,16 +174,48 @@
     if (message.event === 'maxgymPaymentAccepted') frame.contentWindow.postMessage({
       event: 'maxgymPaymentAcknowledged', reference
     }, event.origin);
-    if (countedPayments.has(reference)) return;
-    countedPayments.add(reference);
+    const transaction = typeof message.invoiceNumber === 'string' &&
+      /^[a-z0-9_-]{1,80}$/i.test(message.invoiceNumber) ? message.invoiceNumber : 'SB-' + reference;
+    const payload = { booking_provider: 'simplybook', transaction_id: transaction,
+      invoice_id: reference, page_location: cleanLocation(), ...attribution() };
+    const mark = channel => {
+      const key = channel + '-' + reference;
+      if (countedPayments.has(key)) return false;
+      try { if (localStorage.getItem('maxgym-paid-v2-' + key)) return false; } catch (_) {}
+      countedPayments.add(key);
+      try { localStorage.setItem('maxgym-paid-v2-' + key, String(Date.now())); } catch (_) {}
+      return true;
+    };
+    if (consent.analytics && gaStarted && mark('ga')) window.gtag('event', 'booking_paid', payload);
+    if (consent.marketing && metaStarted && mark('meta')) window.fbq('trackCustom', 'PaidBooking',
+      { transaction_id: transaction }, { eventID: 'paid-' + reference });
 
-    if (consent.analytics && gaStarted) window.gtag('event', 'booking_paid', {
-      booking_provider: 'simplybook', page_location: cleanLocation()
-    });
-    if (consent.marketing && metaStarted) window.fbq('trackCustom', 'PaidBooking');
+    // Value is supplied by SimplyBook's paid invoice model, never inferred from a price list.
+    if (message.event !== 'maxgymPaymentAccepted' || typeof message.amount !== 'number' ||
+        !Number.isFinite(message.amount) || message.amount <= 0 || message.amount > 100000 ||
+        typeof message.currency !== 'string' || !/^[A-Z]{3}$/.test(message.currency)) return;
+    const purchase = { ...payload, currency: message.currency, value: message.amount,
+      items: [{ item_id: 'maxgym-booking', item_name: 'MAXGYM rezervacia',
+        price: message.amount, quantity: 1 }] };
+    if (consent.analytics && gaStarted && !countedPurchases.has('ga-' + reference) && mark('ga-purchase')) {
+      countedPurchases.add('ga-' + reference);
+      window.gtag('event', 'purchase', purchase);
+    }
+    if (consent.marketing && metaStarted && !countedPurchases.has('meta-' + reference) && mark('meta-purchase')) {
+      countedPurchases.add('meta-' + reference);
+      window.fbq('track', 'Purchase', { value: message.amount, currency: message.currency,
+        order_id: transaction }, { eventID: 'purchase-' + reference });
+    }
   });
 
   const clearMeasurementCookies = () => {
+    try {
+      localStorage.removeItem(SOURCE_KEY);
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('maxgym-paid-v2-')) localStorage.removeItem(key);
+      }
+    } catch (_) {}
     document.cookie.split(';').forEach(part => {
       const name = part.split('=')[0].trim();
       if (!/^(_ga(?:_|$)|_gid$|_gat|_fbp$|_fbc$)/.test(name)) return;
@@ -161,6 +258,7 @@
       location.reload(); return;
     }
     apply(); reopen.focus();
+    sendContext();
   };
   button(copy.reject, () => persist(false, false));
   button(copy.accept, () => persist(true, true));
