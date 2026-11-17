@@ -36,17 +36,17 @@
   function deliver(payment) {
     if (window.parent !== window) {
       var attempts = 0, done = false, retry;
-      function receive(event) {
+      var receive = function (event) {
         if (event.origin !== HOST || event.source !== window.parent || !event.data ||
             event.data.event !== 'maxgymPaymentAcknowledged' || event.data.reference !== payment.reference) return;
         done = true; clearTimeout(retry); window.removeEventListener('message', receive);
-      }
-      function send() {
+      };
+      var send = function () {
         if (done) return;
         window.parent.postMessage(payment, HOST);
         if (++attempts < 20 && !done) retry = setTimeout(send, 250);
         else window.removeEventListener('message', receive);
-      }
+      };
       window.addEventListener('message', receive); send(); return;
     }
     // Standalone pages require their own explicit optional-cookie choice.
