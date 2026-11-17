@@ -13,7 +13,8 @@ class Element {
 function boot(saved) {
   const nodes = []; const listeners = {}; const cookieWrites = [];
   const storage = new Map(saved ? [['maxgym-consent-v1', JSON.stringify(saved)]] : []);
-  const frame = { contentWindow: {} };
+  const acknowledgements = [];
+  const frame = { contentWindow: { postMessage(message, origin) { acknowledgements.push({ message, origin }); } } };
   const document = { documentElement: { lang: 'sk' }, head: new Element('head'), body: new Element('body'),
     referrer: 'https://example.com/?email=private@example.com',
     createElement(tag) { const el = new Element(tag); nodes.push(el); return el; },
@@ -34,7 +35,7 @@ function boot(saved) {
   const complete = (extra = {}) => listeners.message({ source: frame.contentWindow,
     origin: 'https://maxgymbratislava.simplybook.it',
     data: { event: 'bookingDone', id: 'private-payment-id', payment_processor: 'stripe', email: 'private@example.com' }, ...extra });
-  return { window, document, nodes, click, complete, cookieWrites, storage, frame, reloads: () => reloads };
+  return { window, document, nodes, click, complete, cookieWrites, storage, frame, acknowledgements, reloads: () => reloads };
 }
 const saved = (analytics, marketing, time = Date.now()) => ({ version: 1, analytics, marketing, time });
 let b = boot();
@@ -102,11 +103,12 @@ assert.equal(b.window.gtag, undefined);
 const relaySource = readFileSync('scripts/simplybook-paid-gtm.html', 'utf8').replace(/<\/?script>/g, '');
 function relay(dataLayer, origin = 'https://maxgymbratislava.simplybook.it', embedded = true) {
   const calls = [];
-  const window = { dataLayer };
+  const window = { dataLayer, addEventListener() {}, removeEventListener() {} };
   window.parent = embedded ? {
     postMessage(message, target) { calls.push([JSON.parse(JSON.stringify(message)), target]); }
   } : window;
-  vm.runInNewContext(relaySource, { window, location: { origin } });
+  vm.runInNewContext(relaySource, { window, location: { origin }, document: { cookie: '' },
+    setTimeout() {}, clearTimeout() {} });
   return calls;
 }
 assert.deepEqual(relay([{ event: 'purchase', payment_method: 'pay_later' }]), []);
@@ -123,4 +125,70 @@ assert.deepEqual(relay([{ ...accepted, payment_processor: 'delay' }]), []);
 assert.deepEqual(relay([{ event: 'paymentAccepted', transaction_id: 'legacy-id' }]), []);
 assert.deepEqual(relay([accepted], 'https://other.example'), []);
 assert.deepEqual(relay([accepted], undefined, false), []);
+
+// Test the real GTM script without making any network requests or GA4 events.
+function standalone(cookie, payments = [accepted], session = new Map()) {
+  const scripts = [];
+  const document = { cookie, referrer: 'https://maxgym.sk/rezervacia/?private=secret',
+    head: { appendChild(script) { scripts.push(script); } },
+    createElement() { return {}; }, getElementById(id) { return scripts.find(s => s.id === id); } };
+  const window = { dataLayer: [], parent: null }; window.parent = window;
+  const context = { window, document, URL, Date,
+    location: { origin: 'https://maxgymbratislava.simplybook.it',
+      href: 'https://maxgymbratislava.simplybook.it/v2/?utm_source=facebook&utm_medium=paid_social&utm_campaign=maxgym_pro_sparing_03&email=private@example.com#invoice/private-token' },
+    sessionStorage: { getItem: key => session.get(key), setItem: (key, value) => session.set(key, value) } };
+  for (const payment of payments) {
+    window.dataLayer.push(payment);
+    vm.runInNewContext(relaySource, context);
+  }
+  return { scripts, events: window.dataLayer.filter(e => e[0] === 'event'),
+    configs: window.dataLayer.filter(e => e[0] === 'config'), session };
+}
+for (const cookie of ['', 'cookies_accepted=no', 'cookies_accepted=necessary', 'cookies_accepted=yes_fake']) {
+  const result = standalone(cookie);
+  assert.equal(result.events.length, 0, 'Standalone requires its own explicit consent');
+  assert.equal(result.scripts.length, 0);
+}
+let direct = standalone('other=keep; cookies_accepted=yes', [accepted, accepted]);
+assert.equal(direct.events.length, 1, 'Standalone now records a paid event once');
+assert.equal(direct.events[0][1], 'booking_paid');
+assert.equal(direct.events[0][2].send_to, 'G-CLP2PW76E6');
+assert.equal(direct.events[0][2].page_location,
+  'https://maxgymbratislava.simplybook.it/v2/?utm_source=facebook&utm_medium=paid_social&utm_campaign=maxgym_pro_sparing_03');
+assert.equal(direct.configs[0][2].send_page_view, false);
+assert.equal(direct.scripts.length, 1);
+assert(!JSON.stringify(direct.events).includes('private'));
+assert.equal(standalone('cookies_accepted=yes', [accepted], direct.session).events.length, 0, 'Reload does not duplicate payment');
+assert.equal(standalone('cookies_accepted=yes', [{ ...accepted, payment_processor: 'delay' }]).events.length, 0);
+
+// Reproduce a host that is not listening yet, then accepts the retry.
+const pendingTimers = [];
+const relayListeners = {};
+const relayCalls = [];
+const relayWindow = { dataLayer: [accepted],
+  addEventListener(name, fn) { relayListeners[name] = fn; },
+  removeEventListener(name) { delete relayListeners[name]; } };
+let hostReady = false;
+relayWindow.parent = { postMessage(message, origin) {
+  relayCalls.push({ message, origin });
+  if (hostReady) relayListeners.message({ source: relayWindow.parent, origin: 'https://maxgym.sk',
+    data: { event: 'maxgymPaymentAcknowledged', reference: message.reference } });
+} };
+vm.runInNewContext(relaySource, { window: relayWindow,
+  location: { origin: 'https://maxgymbratislava.simplybook.it' },
+  setTimeout(fn) { pendingTimers.push(fn); return pendingTimers.length; }, clearTimeout() {} });
+assert.equal(relayCalls.length, 1);
+assert.equal(pendingTimers.length, 1, 'Wait for receiver instead of silently losing payment');
+hostReady = true;
+pendingTimers.shift()();
+assert.equal(relayCalls.length, 2);
+assert.equal(pendingTimers.length, 0, 'Acknowledgement stops retries');
+assert.equal(relayListeners.message, undefined);
+b = boot(saved(true, false));
+b.complete({ data: messages[0][0] }); b.complete({ data: messages[0][0] });
+assert.equal(b.acknowledgements.length, 2, 'Receiver acknowledges duplicate retries');
+assert.equal(b.window.dataLayer.filter(e => e[1] === 'booking_paid').length, 1);
+b = boot(saved(false, false)); b.complete({ data: messages[0][0] });
+assert.equal(b.acknowledgements.length, 1, 'Declined consent is acknowledged without tracking');
+assert.equal(b.window.dataLayer, undefined);
 console.log('PASS: separate consents, source/origin, paid-event relay, URL redaction, payment deduplication and no replay.');

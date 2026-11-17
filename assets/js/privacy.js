@@ -59,6 +59,7 @@
       window.gtag('js', new Date());
       window.gtag('config', GA, {
         page_location: cleanLocation(), page_referrer: document.referrer.split('?')[0].split('#')[0],
+        linker: { domains: ['maxgymbratislava.simplybook.it'] },
         allow_google_signals: false, allow_ad_personalization_signals: false
       });
       script('https://www.googletagmanager.com/gtag/js?id=' + GA, 'maxgym-ga');
@@ -101,8 +102,14 @@
     if (typeof processor !== 'string' || !/^[a-z0-9_-]{1,60}$/i.test(processor) ||
         /^(delay|pay_later|paylater|cash|manual|free|onsite|offline)$/i.test(processor)) return;
     if (Number.isSafeInteger(reference) && reference > 0) reference = String(reference);
-    if (typeof reference !== 'string' || !/^[a-z0-9_-]{1,80}$/i.test(reference) ||
-        countedPayments.has(reference)) return;
+    if (typeof reference !== 'string' || !/^[a-z0-9_-]{1,80}$/i.test(reference)) return;
+
+    // Acknowledge even a duplicate or a declined measurement choice. The sender
+    // retries briefly when the host page is still loading after a payment return.
+    if (message.event === 'maxgymPaymentAccepted') frame.contentWindow.postMessage({
+      event: 'maxgymPaymentAcknowledged', reference
+    }, event.origin);
+    if (countedPayments.has(reference)) return;
     countedPayments.add(reference);
 
     if (consent.analytics && gaStarted) window.gtag('event', 'booking_paid', {
