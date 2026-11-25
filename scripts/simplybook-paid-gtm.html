@@ -1,13 +1,44 @@
 <script>
 (function () {
   'use strict';
-  if (location.origin !== 'https://maxgymbratislava.simplybook.it' || window.maxgymPaidRelayV6) return;
-  window.maxgymPaidRelayV6 = true;
+  if (location.origin !== 'https://maxgymbratislava.simplybook.it' || window.maxgymPaidRelayV7) return;
+  window.maxgymPaidRelayV7 = true;
   var HOST = 'https://maxgym.sk';
   var GA = 'G-CLP2PW76E6';
   var contextKey = 'maxgym-source-context-v2';
   var age = 30 * 24 * 60 * 60 * 1000;
   var measured = {};
+  var standaloneStarted = false;
+  var bridge = null;
+  function startBridge() {
+    if (bridge || window.parent !== window || !accepted()) return;
+    try {
+      bridge = document.createElement('iframe'); bridge.hidden = true;
+      bridge.title = 'MAXGYM optional measurement'; bridge.referrerPolicy = 'no-referrer';
+      bridge.src = HOST + '/meranie-potvrdenia/';
+      document.body.appendChild(bridge);
+    } catch (_) { bridge = null; }
+  }
+  function bridgePayment(payment) {
+    startBridge();
+    if (!bridge || !bridge.contentWindow) return;
+    var attempts = 0, done = false, retry;
+    var receive = function (event) {
+      if (event.origin !== HOST || event.source !== bridge.contentWindow || !event.data ||
+          event.data.event !== 'maxgymBridgeAcknowledged' || event.data.reference !== payment.reference) return;
+      done = true; clearTimeout(retry); window.removeEventListener('message', receive);
+    };
+    var send = function () {
+      if (done || !accepted()) return;
+      bridge.contentWindow.postMessage({event: 'maxgymStandalonePaid', status: 'paid',
+        reference: payment.reference, processor: payment.processor,
+        invoiceNumber: payment.invoiceNumber || 'SB-' + payment.reference,
+        amount: payment.amount, currency: payment.currency}, HOST);
+      if (++attempts < 20 && !done) retry = setTimeout(send, 250);
+      else window.removeEventListener('message', receive);
+    };
+    window.addEventListener('message', receive); send();
+  }
   function tag(value) { return typeof value === 'string' && /^[a-z0-9 _.,|:/-]{1,150}$/i.test(value) ? value : ''; }
   function identifier(value) {
     if (Number.isSafeInteger(value) && value > 0) value = String(value);
@@ -22,11 +53,95 @@
   function remember(data) {
     try { sessionStorage.setItem(contextKey, JSON.stringify(data)); } catch (_) {}
   }
+  function readStored() {
+    try {
+      var value = JSON.parse(sessionStorage.getItem(contextKey));
+      return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
+    } catch (_) { return {}; }
+  }
+  function accepted() {
+    return /(?:^|;\s*)cookies_accepted=yes(?:;|$)/.test(document.cookie);
+  }
+  function pageContext() {
+    try {
+      var url = new URL(location.href);
+      // The official iframe exposes the host URL; it is never sent to Analytics verbatim.
+      if (!tag(url.searchParams.get('utm_campaign')) && url.searchParams.get('host_url')) {
+        var hostUrl = new URL(url.searchParams.get('host_url'));
+        if (hostUrl.origin === HOST) url = hostUrl;
+      }
+      if (!tag(url.searchParams.get('utm_campaign'))) return null;
+      return context({campaign: url.searchParams.get('utm_campaign'),
+        source: url.searchParams.get('utm_source'), medium: url.searchParams.get('utm_medium'),
+        content: url.searchParams.get('utm_content'), time: Date.now()});
+    } catch (_) { return null; }
+  }
+  var landingContext = pageContext();
+  function cleanPage(ctx) {
+    var clean = new URL(location.origin + '/v2/');
+    if (ctx) ['source', 'medium', 'campaign', 'content'].forEach(function (key) {
+      if (ctx[key]) clean.searchParams.set('utm_' + key, ctx[key]);
+    });
+    return clean.href;
+  }
+  function startStandalone() {
+    if (window.parent !== window || !accepted()) return;
+    startBridge();
+    var stored = readStored();
+    if (landingContext) { stored.context = landingContext; remember(stored); }
+    if (standaloneStarted) return;
+    standaloneStarted = true;
+    var ctx = context(stored.context);
+    var referrer = '';
+    try { if (document.referrer) referrer = new URL(document.referrer).origin + '/'; } catch (_) {}
+    var config = {send_page_view: !/\/invoice(?:\/|$)/.test(new URL(location.href).pathname),
+      page_location: cleanPage(ctx), page_referrer: referrer, linker: {accept_incoming: true},
+      allow_google_signals: false, allow_ad_personalization_signals: false};
+    // Keep the client and session handed over by the consented host, when available.
+    if (/^\d+\.\d+$/.test(stored.client || '')) config.client_id = stored.client;
+    if (Number.isFinite(stored.issued) && Date.now() - stored.issued >= 0 &&
+        Date.now() - stored.issued < 30 * 60 * 1000 && /^\d{1,16}$/.test(stored.session || ''))
+      config.session_id = stored.session;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag('consent', 'default', {analytics_storage: 'granted', ad_storage: 'denied',
+      ad_user_data: 'denied', ad_personalization: 'denied'});
+    window.gtag('js', new Date()); window.gtag('config', GA, config);
+    ['client_id', 'session_id'].forEach(function (field) {
+      window.gtag('get', GA, field, function (value) {
+        if (!accepted()) return;
+        var record = readStored();
+        if (field === 'client_id' && /^\d+\.\d+$/.test(String(value))) record.client = String(value);
+        if (field === 'session_id' && /^\d{1,16}$/.test(String(value))) record.session = String(value);
+        record.issued = Date.now(); remember(record);
+      });
+    });
+    if (!document.getElementById('maxgym-standalone-ga')) {
+      var script = document.createElement('script'); script.id = 'maxgym-standalone-ga'; script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA; document.head.appendChild(script);
+    }
+  }
+  // Capture a tagged landing before the invoice/Stripe return removes its query.
+  // Do not store a source or load Analytics until SimplyBook's own optional-cookie consent.
+  startStandalone();
+  if (typeof document.addEventListener === 'function') document.addEventListener('click', function () {
+    setTimeout(function () { try { startStandalone(); } catch (_) {} }, 0);
+  }, true);
+  window.addEventListener('message', function (event) {
+    if (!bridge || event.source !== bridge.contentWindow || event.origin !== HOST || !event.data ||
+        event.data.event !== 'maxgymBridgeReady' || event.data.analytics !== true || !accepted()) return;
+    var record = readStored(), fromHost = context(event.data.context), current = context(record.context);
+    if (fromHost && (!current || fromHost.time > current.time)) record.context = fromHost;
+    if (/^\d+\.\d+$/.test(event.data.client || '')) record.client = event.data.client;
+    remember(record);
+    if (standaloneStarted && window.gtag && record.client) window.gtag('config', GA,
+      {client_id: record.client, send_page_view: false, page_location: cleanPage(context(record.context))});
+  });
   window.addEventListener('message', function (event) {
     if (event.origin !== HOST || event.source !== window.parent || !event.data ||
         event.data.event !== 'maxgymMeasurementContext' || event.data.analytics !== true) return;
     var message = event.data;
-    var value = { context: context(message.context), issued: Date.now() };
+    var value = { context: context(message.context) || landingContext, issued: Date.now() };
     if (typeof message.client === 'string' && /^\d+\.\d+$/.test(message.client)) value.client = message.client;
     if (/^\d{1,16}$/.test(String(message.session))) value.session = String(message.session);
     remember(value);
@@ -50,32 +165,19 @@
       window.addEventListener('message', receive); send(); return;
     }
     // Standalone pages require their own explicit optional-cookie choice.
-    if (!/(?:^|;\s*)cookies_accepted=yes(?:;|$)/.test(document.cookie)) return;
-    var stored = null;
-    try { stored = JSON.parse(sessionStorage.getItem(contextKey)); } catch (_) {}
+    if (!accepted()) return;
+    startStandalone();
+    bridgePayment(payment);
+    var stored = readStored();
     var ctx = stored && context(stored.context);
     var params = new URL(location.href).searchParams;
     if (tag(params.get('utm_campaign'))) ctx = context({ campaign: params.get('utm_campaign'),
       source: params.get('utm_source'), medium: params.get('utm_medium'),
       content: params.get('utm_content'), time: Date.now() });
     var transaction = payment.invoiceNumber || 'SB-' + payment.reference;
-    var clean = new URL(location.origin + '/v2/');
-    if (ctx) ['source', 'medium', 'campaign', 'content'].forEach(function (key) {
-      if (ctx[key]) clean.searchParams.set('utm_' + key, ctx[key]);
-    });
-    var config = { send_page_view: false, page_location: clean.href,
-      page_referrer: document.referrer ? new URL(document.referrer).origin + '/' : '',
-      linker: { accept_incoming: true }, allow_google_signals: false, allow_ad_personalization_signals: false };
-    if (stored && /^\d+\.\d+$/.test(stored.client || '')) config.client_id = stored.client;
-    if (stored && Date.now() - stored.issued >= 0 && Date.now() - stored.issued < 30 * 60 * 1000 &&
-        /^\d{1,16}$/.test(stored.session || '')) config.session_id = stored.session;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-    window.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied',
-      ad_user_data: 'denied', ad_personalization: 'denied' });
-    window.gtag('js', new Date()); window.gtag('config', GA, config);
+    var clean = cleanPage(ctx);
     var payload = { send_to: GA, booking_provider: 'simplybook', transaction_id: transaction,
-      invoice_id: payment.reference, page_location: clean.href,
+      invoice_id: payment.reference, page_location: clean,
       mg_attribution: ctx ? 'tagged_click_30d' : 'unknown',
       mg_campaign: ctx ? ctx.campaign : 'unknown', mg_content: ctx ? ctx.content || 'unknown' : 'unknown',
       mg_source: ctx ? ctx.source || 'unknown' : 'unknown', mg_medium: ctx ? ctx.medium || 'unknown' : 'unknown',
@@ -85,10 +187,7 @@
     try { if (sessionStorage.getItem(key)) return; } catch (_) {}
     window.gtag('event', 'booking_paid', payload); window.gtag('event', 'purchase', payload);
     try { sessionStorage.setItem(key, '1'); } catch (_) {}
-    if (!document.getElementById('maxgym-standalone-ga')) {
-      var script = document.createElement('script'); script.id = 'maxgym-standalone-ga'; script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA; document.head.appendChild(script);
-    }
+    // Never load a Pixel on the private invoice URL: it could disclose the payment token.
   }
   function observe(name, args) {
     try {
@@ -114,9 +213,10 @@
     if (typeof require === 'function') require(['lib/plugin/PluginBroker'], function (Broker) {
       try {
         Broker.getInstance().on('perform:event', observe);
-        document.documentElement.setAttribute('data-maxgym-paid-relay', '6');
+        document.documentElement.setAttribute('data-maxgym-paid-relay', '7');
       } catch (_) {}
     });
   } catch (_) {}
 })();
 </script>
+
